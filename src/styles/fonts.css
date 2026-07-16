@@ -1,0 +1,116 @@
+/* Effra Std — bundled OTFs served from /public/fonts (works on Vercel) */
+@font-face {
+  font-family: 'Effra';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Lt.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_LtIt.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Rg.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_It.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Md.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_MdIt.otf') format('opentype');
+}
+/* Map 600 (semibold) to Medium so font-semibold renders crisply without a real semibold cut */
+@font-face {
+  font-family: 'Effra';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Md.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Bd.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_BdIt.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_He.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_HeIt.otf') format('opentype');
+}
+
+/* Alias used in Profile screens */
+@font-face {
+  font-family: 'Effra_VF_Trial:Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Rg.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra_VF_Trial:Medium';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Md.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra_VF_Trial:SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Md.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra_VF_Trial:Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_Bd.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Effra_VF_Trial:XBold';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/Effra_Std_He.otf') format('opentype');
+}

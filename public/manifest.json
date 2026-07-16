@@ -1,0 +1,51 @@
+{
+  "name": "Onboard2Earn",
+  "short_name": "Onboard2Earn",
+  "description": "Onboard2Earn - staff-assisted customer onboarding and referral rewards application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#003883",
+  "theme_color": "#003883",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["finance", "banking"],
+  "screenshots": [],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "description": "View your Onboard & Earn hub",
+      "url": "/home",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Onboard a Customer",
+      "short_name": "Onboard",
+      "description": "Capture KYC for a new customer",
+      "url": "/staff-rewards/auth",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Leaderboard & Rewards",
+      "short_name": "Rewards",
+      "description": "View your rank, points and tier standing",
+      "url": "/rewards",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    }
+  ]
+}
