@@ -156,7 +156,7 @@ export default function SignatureModal({ isOpen, onClose, onSave }: SignatureMod
     setUploadedImage(null);
     clearCanvas();
 
-    // Start camera if switching to photo mode
+    // Start camera if switching to photo modee
     if (newMode === 'photo') {
       startCamera();
     }
