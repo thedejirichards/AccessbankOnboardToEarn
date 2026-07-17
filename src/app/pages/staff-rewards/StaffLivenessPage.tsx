@@ -81,7 +81,7 @@ export default function StaffLivenessPage() {
   return (
     <MobileLayout>
       <div className="bg-white h-full flex flex-col">
-        <StaffHeader title="Liveness Verification" onBack={() => { stopStream(); navigate("/staff-rewards/validating"); }} />
+        <StaffHeader title="Liveness Verification" onBack={() => { stopStream(); navigate("/staff-rewards/identity"); }} />
         <StaffProgressTracker currentStep={6} totalSteps={10} labels={journeyLabels} />
 
         <div className="flex-1 overflow-y-auto px-[24px] pt-[10px] pb-[120px]">

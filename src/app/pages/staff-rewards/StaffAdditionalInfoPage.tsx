@@ -3,8 +3,9 @@ import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import MobileLayout from "../../components/MobileLayout";
 import SignatureModal from "../../components/SignatureModal";
-import { StaffHeader, StaffProgressTracker, FloatingField, ctaCls, ctaEnabled, ctaDisabled, journeyLabels } from "./StaffComponents";
+import { StaffHeader, StaffProgressTracker, FloatingField, FloatingSelect, ctaCls, ctaEnabled, ctaDisabled, journeyLabels } from "./StaffComponents";
 import { getDraft, patchDraft, type RelationshipOfficer } from "./onboardingDraft";
+import { nigerianStates, lgasByState } from "./nigeriaLocations";
 
 const roPool: RelationshipOfficer[] = [
   { name: "Adaeze Nwankwo", email: "adaeze.nwankwo@accessbankplc.com", phone: "0803 210 4471" },
@@ -21,14 +22,20 @@ function generateAccountNumber(): string {
 export default function StaffAdditionalInfoPage() {
   const navigate = useNavigate();
   const draft = getDraft();
-  const [address, setAddress] = useState("");
-  const [nextOfKin, setNextOfKin] = useState("");
-  const [occupation, setOccupation] = useState("");
+  const [state, setState] = useState("");
+  const [lga, setLga] = useState("");
+  const [street, setStreet] = useState("");
+  const lgaOptions = state ? lgasByState[state] || [] : [];
+
+  const selectState = (v: string) => {
+    setState(v);
+    setLga("");
+  };
   const [signature, setSignature] = useState<string | null>(null);
   const [sigOpen, setSigOpen] = useState(false);
   const [creating, setCreating] = useState(false);
 
-  const ready = address.trim().length > 4 && nextOfKin.trim() && occupation.trim() && signature !== null;
+  const ready = state.trim().length > 1 && lga.trim().length > 1 && street.trim().length > 4 && signature !== null;
 
   const submit = () => {
     if (!ready || creating) return;
@@ -36,9 +43,9 @@ export default function StaffAdditionalInfoPage() {
     setTimeout(() => {
       const ro = roPool[Math.floor(Math.random() * roPool.length)];
       patchDraft({
-        address,
-        nextOfKin,
-        occupation,
+        state,
+        lga,
+        street,
         signature: signature || "",
         accountNumber: generateAccountNumber(),
         ro,
@@ -71,13 +78,20 @@ export default function StaffAdditionalInfoPage() {
           </div>
 
           <div className="mb-[16px]">
-            <FloatingField label="Residential address" value={address} onChange={setAddress} hint="Street, city, state" />
+            <FloatingSelect label="State" value={state} onChange={selectState} options={nigerianStates} />
           </div>
           <div className="mb-[16px]">
-            <FloatingField label="Next of kin" value={nextOfKin} onChange={setNextOfKin} />
+            <FloatingSelect
+              label="LGA"
+              value={lga}
+              onChange={setLga}
+              options={lgaOptions}
+              disabled={!state}
+              hint={!state ? "Select a state first" : undefined}
+            />
           </div>
           <div className="mb-[16px]">
-            <FloatingField label="Occupation" value={occupation} onChange={setOccupation} />
+            <FloatingField label="Street address" value={street} onChange={setStreet} />
           </div>
 
           <p className="font-['Effra',sans-serif] font-bold text-[13px] text-[#383838] mb-[8px]">Customer signature</p>

@@ -8,7 +8,7 @@ export default function StaffConsentPage() {
 
   const accept = () => {
     patchDraft({ consentAccepted: true });
-    navigate("/staff-rewards/identity");
+    navigate("/staff-rewards/terms");
   };
 
   const decline = () => {
@@ -20,7 +20,7 @@ export default function StaffConsentPage() {
     <MobileLayout>
       <div className="bg-white h-full flex flex-col">
         <StaffHeader title="Customer Consent" onBack={() => navigate("/staff-rewards/account-type")} />
-        <StaffProgressTracker currentStep={3} totalSteps={10} labels={journeyLabels} />
+        <StaffProgressTracker currentStep={3} totalSteps={11} labels={journeyLabels} />
 
         <div className="flex-1 overflow-y-auto px-[24px] pt-[10px] pb-[120px]">
           <h2 className="font-['Effra',sans-serif] font-bold text-[20px] text-[#383838] mb-[6px]">Before we begin</h2>

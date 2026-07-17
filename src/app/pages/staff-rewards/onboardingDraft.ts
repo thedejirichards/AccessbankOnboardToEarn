@@ -21,6 +21,11 @@ export interface OnboardingDraft {
   category?: AccountCategory;
   accountType?: string;
   consentAccepted?: boolean;
+  cryptoAttestation?: boolean;
+  politicallyExposed?: boolean;
+  resident?: boolean;
+  termsAccepted?: boolean;
+  dataConsent?: boolean;
   idType?: IdType;
   idNumber?: string;
   phone?: string;
@@ -29,10 +34,10 @@ export interface OnboardingDraft {
   otpChannel?: OtpChannel;
   otpVerified?: boolean;
   profile?: OnboardingProfile;
-  address?: string;
+  state?: string;
+  lga?: string;
+  street?: string;
   signature?: string; // data URL
-  nextOfKin?: string;
-  occupation?: string;
   accountNumber?: string;
   ro?: RelationshipOfficer;
 }

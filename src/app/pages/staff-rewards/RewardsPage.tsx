@@ -32,37 +32,6 @@ const sectionAnim = {
   transition: { type: "spring" as const, damping: 22, stiffness: 220 },
 };
 
-function BottomNav() {
-  const navigate = useNavigate();
-  const tabs = [
-    { id: "home", label: "Home", route: "/home", d: "M3 11l9-8 9 8M5 10v10h14V10" },
-    { id: "rewards", label: "Rewards", route: "/rewards", active: true, d: "M6 9V4h12v5a6 6 0 01-12 0zM9 20h6M12 15v5" },
-    { id: "scan", label: "Scan", route: "/home", d: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" },
-    { id: "support", label: "Support", route: "/home", d: "M12 3a9 9 0 100 18 9 9 0 000-18zM9.5 9a2.5 2.5 0 013.5 2c0 1.5-2 1.8-2 3M12 17h.01" },
-    { id: "profile", label: "Profile", route: "/home", d: "M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c0-2.7 5.3-4 8-4s8 1.3 8 4" },
-  ];
-  return (
-    <div className="shrink-0 w-full bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(16,24,40,0.06)] flex items-center justify-around py-[8px] z-20">
-      {tabs.map((t) => (
-        <motion.button
-          key={t.id}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => navigate(t.route)}
-          className={`relative flex flex-col items-center gap-[3px] px-[10px] pt-[6px] pb-[2px] ${t.active ? "text-[#003883]" : "text-[#878787]"} hover:text-[#003883] transition-colors`}
-        >
-          {t.active && (
-            <motion.span layoutId="navPill" className="absolute -top-[2px] w-[22px] h-[3px] rounded-full bg-[#FF8200]" />
-          )}
-          <svg className="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="none">
-            <path d={t.d} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className={`font-['Effra',sans-serif] text-[10px] ${t.active ? "font-bold" : "font-medium"}`}>{t.label}</span>
-        </motion.button>
-      ))}
-    </div>
-  );
-}
-
 export default function RewardsPage() {
   const navigate = useNavigate();
   const tier = tierForPoints(currentStaff.points);
@@ -274,8 +243,6 @@ export default function RewardsPage() {
             Every rank shift is tied to a real, activated customer — never to a submitted form.
           </p>
         </div>
-
-        <BottomNav />
       </div>
     </MobileLayout>
   );

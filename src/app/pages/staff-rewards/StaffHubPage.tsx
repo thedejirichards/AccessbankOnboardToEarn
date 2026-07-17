@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import MobileLayout from "../../components/MobileLayout";
@@ -16,6 +17,7 @@ import {
   tierForPoints,
   nextTier,
 } from "./StaffComponents";
+import StaffDrawer from "./StaffDrawer";
 
 const actions = [
   {
@@ -51,6 +53,7 @@ const actions = [
 
 export default function StaffHubPage() {
   const navigate = useNavigate();
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const tier = tierForPoints(currentStaff.points);
   const next = nextTier(currentStaff.points);
   const tierProgress = next ? (currentStaff.points - tier.min) / (next.min - tier.min) : 1;
@@ -61,7 +64,20 @@ export default function StaffHubPage() {
         <div className={`relative ${heroGrad} pb-[26px] rounded-b-[28px] shadow-[0_12px_30px_rgba(10,47,102,0.25)]`}>
           <HeroPattern id="hubDots" />
           <div className="relative">
-            <StaffHeader title="Onboard & Earn" onBack={() => navigate("/")} variant="blue" />
+            <StaffHeader
+              title="Onboard & Earn"
+              variant="blue"
+              right={
+                <button
+                  onClick={() => setDrawerOpen(true)}
+                  className="w-[36px] h-[36px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                </button>
+              }
+            />
             <div className="px-[20px] pt-[4px]">
               <p className="font-['Effra',sans-serif] text-[12px] text-white/65">Good afternoon,</p>
               <p className="font-['Effra',sans-serif] font-bold text-[21px] text-white">{currentStaff.name}</p>
@@ -154,6 +170,8 @@ export default function StaffHubPage() {
           </motion.div>
         </div>
       </div>
+
+      <StaffDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </MobileLayout>
   );
 }

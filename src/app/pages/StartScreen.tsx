@@ -15,10 +15,10 @@ export default function StartScreen() {
           />
 
           <button
-            onClick={() => navigate("/home")}
-            className="w-full max-w-[280px] bg-gradient-to-b from-[#6DA0F2] to-[#4A7FE0] hover:from-[#7DAEF5] hover:to-[#5A8FE8] text-white font-['Effra',sans-serif] font-bold text-[16px] py-[14px] rounded-[14px] shadow-lg active:scale-[0.98] transition-all"
+            onClick={() => navigate("/login/entra")}
+            className="w-full max-w-[280px] bg-[#F57E20] hover:bg-[#e06f14] text-white font-['Effra',sans-serif] font-bold text-[16px] py-[14px] rounded-[14px] shadow-lg active:scale-[0.98] transition-all"
           >
-            Log In
+            Log In with Entra
           </button>
         </div>
       </div>

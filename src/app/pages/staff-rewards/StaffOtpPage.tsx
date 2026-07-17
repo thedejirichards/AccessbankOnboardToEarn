@@ -6,7 +6,6 @@ import { getDraft, patchDraft, type OtpChannel } from "./onboardingDraft";
 
 const channels: { id: OtpChannel; label: string }[] = [
   { id: "sms", label: "SMS" },
-  { id: "email", label: "Email" },
   { id: "whatsapp", label: "WhatsApp" },
 ];
 

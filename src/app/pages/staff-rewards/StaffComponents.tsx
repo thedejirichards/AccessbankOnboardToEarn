@@ -62,6 +62,59 @@ export function FloatingField({
   );
 }
 
+/* ---------- Floating-label select (dropdown variant of FloatingField) ---------- */
+export function FloatingSelect({
+  label,
+  value,
+  onChange,
+  options,
+  disabled = false,
+  hint,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  disabled?: boolean;
+  hint?: ReactNode;
+}) {
+  const filled = value !== "";
+  return (
+    <div>
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          className={`peer w-full bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] pr-[38px] font-['Effra',sans-serif] text-[14px] text-[#1E293B] outline-none focus:border-2 transition-colors appearance-none border-[#E2E8F0] focus:border-[#003883] ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+        >
+          <option value="" disabled hidden />
+          {options.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
+        </select>
+        <label
+          className={`absolute left-[16px] font-['Effra',sans-serif] text-[#64748B] pointer-events-none transition-all ${filled ? "top-[10px] text-[10px]" : "top-1/2 -translate-y-1/2 text-[14px]"}`}
+        >
+          {label}
+        </label>
+        <svg
+          className="absolute right-[14px] top-1/2 -translate-y-1/2 pointer-events-none"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path d="M6 9l6 6 6-6" stroke="#64748B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+      {hint && <div className="mt-[6px] font-['Effra',sans-serif] text-[11px] text-[#94A3B8]">{hint}</div>}
+    </div>
+  );
+}
+
 /* ---------- Hero texture: dot grid + radial glows over the blue gradient ---------- */
 export function HeroPattern({ id = "staffDots" }: { id?: string }) {
   return (
@@ -94,7 +147,7 @@ export function StaffHeader({
   right,
 }: {
   title: string;
-  onBack: () => void;
+  onBack?: () => void;
   variant?: "light" | "blue";
   right?: ReactNode;
 }) {
@@ -102,12 +155,14 @@ export function StaffHeader({
   const stroke = blue ? "white" : "#383838";
   return (
     <div className={`relative h-[64px] flex items-center px-[20px] shrink-0 ${blue ? "" : "border-b border-[#f0f0f0]"}`}>
-      <motion.button whileTap={{ scale: 0.88 }} onClick={onBack} className={`w-[36px] h-[36px] flex items-center justify-center rounded-full ${blue ? "bg-white/10" : "bg-[#f4f6f8]"}`}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M15 18L9 12L15 6" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </motion.button>
-      <div className="flex-1 text-center mr-[36px]">
+      {onBack && (
+        <motion.button whileTap={{ scale: 0.88 }} onClick={onBack} className={`w-[36px] h-[36px] flex items-center justify-center rounded-full ${blue ? "bg-white/10" : "bg-[#f4f6f8]"}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </motion.button>
+      )}
+      <div className={`flex-1 text-center ${onBack ? "mr-[36px]" : ""}`}>
         <span className={`font-['Effra',sans-serif] font-bold text-[17px] ${blue ? "text-white" : "text-[#383838]"}`}>
           {title}
         </span>
@@ -126,8 +181,8 @@ export const journeyLabels = [
   "Category",
   "Type",
   "Consent",
+  "Terms",
   "Identity",
-  "Validation",
   "Liveness",
   "OTP",
   "Review",
@@ -169,6 +224,58 @@ export function StaffProgressTracker({
         ))}
       </div>
     </div>
+  );
+}
+
+/* ---------- Toggle switch (consent / attestation controls) ---------- */
+export function ToggleSwitch({
+  checked,
+  onChange,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={() => onChange(!checked)}
+      className={`shrink-0 w-[46px] h-[26px] rounded-full p-[3px] transition-colors duration-200 ${checked ? "bg-[#003883]" : "bg-[#e2e5ea]"}`}
+    >
+      <motion.div
+        animate={{ x: checked ? 20 : 0 }}
+        transition={{ type: "spring", stiffness: 500, damping: 32 }}
+        className="w-[20px] h-[20px] rounded-full bg-white shadow-[0_1px_3px_rgba(0,0,0,0.25)]"
+      />
+    </button>
+  );
+}
+
+/* ---------- Radio option (single-choice questions) ---------- */
+export function RadioOption({
+  label,
+  selected,
+  onSelect,
+}: {
+  label: string;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <button type="button" onClick={onSelect} className="flex items-center gap-[10px] py-[7px]">
+      <span className={`w-[20px] h-[20px] rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${selected ? "border-[#003883]" : "border-[#c9cdd4]"}`}>
+        {selected && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", damping: 12, stiffness: 260 }}
+            className="w-[10px] h-[10px] rounded-full bg-[#003883]"
+          />
+        )}
+      </span>
+      <span className="font-['Effra',sans-serif] text-[14px] text-[#26282b]">{label}</span>
+    </button>
   );
 }
 
