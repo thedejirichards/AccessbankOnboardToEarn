@@ -55,7 +55,7 @@ export default function StaffSuccessPage() {
 
   const onboardAnother = () => {
     clearDraft();
-    navigate("/staff-rewards/auth");
+    navigate("/staff-rewards/category");
   };
 
   return (

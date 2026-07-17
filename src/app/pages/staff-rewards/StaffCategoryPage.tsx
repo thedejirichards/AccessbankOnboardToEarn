@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import MobileLayout from "../../components/MobileLayout";
 import { StaffHeader, StaffProgressTracker, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels } from "./StaffComponents";
-import { patchDraft, type AccountCategory } from "./onboardingDraft";
+import { clearDraft, patchDraft, type AccountCategory } from "./onboardingDraft";
 
 const categories: { id: AccountCategory; title: string; desc: string; disabled?: boolean }[] = [
   { id: "individual", title: "Individual", desc: "A personal account for a single customer." },
@@ -14,6 +14,8 @@ export default function StaffCategoryPage() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<AccountCategory | null>(null);
 
+  useEffect(() => { clearDraft(); }, []);
+
   const submit = () => {
     if (!selected) return;
     patchDraft({ category: selected });
@@ -23,8 +25,8 @@ export default function StaffCategoryPage() {
   return (
     <MobileLayout>
       <div className="bg-white h-full flex flex-col">
-        <StaffHeader title="Account Category" onBack={() => navigate("/staff-rewards/auth")} />
-        <StaffProgressTracker currentStep={2} totalSteps={11} labels={journeyLabels} />
+        <StaffHeader title="Account Category" onBack={() => navigate("/staff-rewards")} />
+        <StaffProgressTracker currentStep={1} totalSteps={10} labels={journeyLabels} />
 
         <div className="flex-1 overflow-y-auto px-[24px] pt-[10px] pb-[120px]">
           <h2 className="font-['Effra',sans-serif] font-bold text-[20px] text-[#383838] mb-[6px]">What kind of account?</h2>

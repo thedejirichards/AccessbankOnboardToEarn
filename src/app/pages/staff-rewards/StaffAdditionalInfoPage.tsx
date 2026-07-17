@@ -51,7 +51,7 @@ export default function StaffAdditionalInfoPage() {
     <MobileLayout>
       <div className="bg-white h-full flex flex-col">
         <StaffHeader title="Additional Information" onBack={() => navigate("/staff-rewards/review")} />
-        <StaffProgressTracker currentStep={10} totalSteps={11} labels={journeyLabels} />
+        <StaffProgressTracker currentStep={9} totalSteps={10} labels={journeyLabels} />
 
         <div className="flex-1 overflow-y-auto px-[24px] pt-[10px] pb-[120px]">
           <div className="flex justify-center mb-[20px]">

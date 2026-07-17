@@ -1,7 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import StartScreen from "./pages/StartScreen";
 import StaffHubPage from "./pages/staff-rewards/StaffHubPage";
-import StaffAuthPage from "./pages/staff-rewards/StaffAuthPage";
 import StaffCategoryPage from "./pages/staff-rewards/StaffCategoryPage";
 import StaffAccountTypePage from "./pages/staff-rewards/StaffAccountTypePage";
 import StaffConsentPage from "./pages/staff-rewards/StaffConsentPage";
@@ -18,7 +17,6 @@ const routes = [
   { path: "/", element: <StartScreen /> },
   { path: "/home", element: <StaffHubPage /> },
   { path: "/staff-rewards", element: <StaffHubPage /> },
-  { path: "/staff-rewards/auth", element: <StaffAuthPage /> },
   { path: "/staff-rewards/category", element: <StaffCategoryPage /> },
   { path: "/staff-rewards/account-type", element: <StaffAccountTypePage /> },
   { path: "/staff-rewards/consent", element: <StaffConsentPage /> },

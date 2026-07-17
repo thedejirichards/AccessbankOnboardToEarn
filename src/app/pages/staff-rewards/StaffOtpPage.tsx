@@ -70,7 +70,7 @@ export default function StaffOtpPage() {
     <MobileLayout>
       <div className="bg-white h-full flex flex-col">
         <StaffHeader title="OTP Verification" onBack={() => navigate("/staff-rewards/liveness")} />
-        <StaffProgressTracker currentStep={8} totalSteps={11} labels={journeyLabels} />
+        <StaffProgressTracker currentStep={7} totalSteps={10} labels={journeyLabels} />
 
         <div className="flex-1 overflow-y-auto px-[24px] pt-[10px] pb-[120px]">
           {!sent ? (

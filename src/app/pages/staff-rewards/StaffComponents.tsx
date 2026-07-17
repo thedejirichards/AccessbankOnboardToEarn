@@ -123,7 +123,6 @@ export const activationLabels = ["Login", "Change Password", "PIN", "Done"];
 
 /* ---------- Full customer onboarding journey step labels ---------- */
 export const journeyLabels = [
-  "Sign-In",
   "Category",
   "Type",
   "Consent",
