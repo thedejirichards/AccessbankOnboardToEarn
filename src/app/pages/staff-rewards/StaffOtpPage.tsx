@@ -17,15 +17,12 @@ function hashDigits(s: string): number {
   return s.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
 }
 
-function generateProfile(idNumber: string) {
+function generateProfile(idNumber: string, dob: string) {
   const h = hashDigits(idNumber || "00000000000");
   const firstName = firstNames[h % firstNames.length];
   const lastName = lastNames[(h >> 2) % lastNames.length];
   const gender = genders[h % genders.length];
-  const year = 1970 + (h % 35);
-  const month = String(1 + (h % 12)).padStart(2, "0");
-  const day = String(1 + (h % 28)).padStart(2, "0");
-  return { firstName, lastName, gender, dob: `${year}-${month}-${day}` };
+  return { firstName, lastName, gender, dob };
 }
 
 export default function StaffOtpPage() {
@@ -59,7 +56,7 @@ export default function StaffOtpPage() {
     setTimeout(() => {
       // Simulated: any 6-digit code is accepted (no real OTP gateway).
       setVerifying(false);
-      const profile = generateProfile(draft.idNumber || "");
+      const profile = generateProfile(draft.idNumber || "", draft.dob || "");
       patchDraft({ otpChannel: channel, otpVerified: true, profile });
       navigate("/staff-rewards/review");
     }, 900);

@@ -29,19 +29,20 @@ export default function StaffIdentityPage() {
   const navigate = useNavigate();
   const [idType, setIdType] = useState<IdType>("bvn");
   const [idNumber, setIdNumber] = useState("");
+  const [dob, setDob] = useState("");
   const [email, setEmail] = useState("");
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState<FailureReason | null>(null);
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const ready = idNumber.length === 11 && emailValid;
+  const ready = idNumber.length === 11 && dob !== "" && emailValid;
 
   const runCheck = () => {
     if (!ready || checking) return;
     const forceFail = demoOutcomes[idNumber] ?? null;
     setError(null);
     setChecking(true);
-    patchDraft({ idType, idNumber, email });
+    patchDraft({ idType, idNumber, dob, email });
     setTimeout(() => {
       if (forceFail) {
         setChecking(false);
@@ -105,6 +106,14 @@ export default function StaffIdentityPage() {
               onChange={(v) => setIdNumber(v.replace(/\D/g, "").slice(0, 11))}
               inputMode="numeric"
               maxLength={11}
+            />
+          </div>
+          <div className="mb-[16px]">
+            <FloatingField
+              label="Date of birth"
+              value={dob}
+              onChange={setDob}
+              type="date"
             />
           </div>
           <div className="mb-[16px]">

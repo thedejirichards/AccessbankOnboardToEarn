@@ -28,6 +28,7 @@ export interface OnboardingDraft {
   dataConsent?: boolean;
   idType?: IdType;
   idNumber?: string;
+  dob?: string;
   phone?: string;
   email?: string;
   livenessFaceImage?: string; // data URL, "" if simulated (no camera)

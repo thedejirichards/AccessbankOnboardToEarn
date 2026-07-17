@@ -40,6 +40,10 @@ export function FloatingField({
     : success
       ? "border-[#16a34a] focus:border-[#16a34a]"
       : "border-[#E2E8F0] focus:border-[#003883]";
+  const filled = value !== "";
+  // Native date inputs always render their own dd/mm/yyyy placeholder segments — hide that
+  // text until focused or filled, so it doesn't collide with the floating label at rest.
+  const textColor = type === "date" && !filled ? "text-transparent focus:text-[#1E293B]" : "text-[#1E293B]";
   return (
     <div>
       <div className="relative">
@@ -49,10 +53,11 @@ export function FloatingField({
           maxLength={maxLength}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder=" "
-          className={`peer w-full bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] font-['Effra',sans-serif] text-[14px] text-[#1E293B] outline-none focus:border-2 transition-colors ${right ? "pr-[48px]" : ""} ${border}`}
+          className={`peer w-full bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] font-['Effra',sans-serif] text-[14px] ${textColor} outline-none focus:border-2 transition-colors ${right ? "pr-[48px]" : ""} ${border}`}
         />
-        <label className="absolute left-[16px] top-1/2 -translate-y-1/2 font-['Effra',sans-serif] text-[14px] text-[#64748B] pointer-events-none peer-focus:top-[10px] peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:top-[10px] peer-[:not(:placeholder-shown)]:text-[10px] transition-all">
+        <label
+          className={`absolute left-[16px] font-['Effra',sans-serif] text-[14px] text-[#64748B] pointer-events-none peer-focus:top-[10px] peer-focus:text-[10px] transition-all ${filled ? "top-[10px] text-[10px]" : "top-1/2 -translate-y-1/2"}`}
+        >
           {label}
         </label>
         {right && <div className="absolute right-[14px] top-1/2 -translate-y-1/2">{right}</div>}
