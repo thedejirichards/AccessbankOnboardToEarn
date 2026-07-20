@@ -7,10 +7,18 @@ export const cardCls =
 export const glassCls = "bg-white/10 backdrop-blur-md border border-white/15";
 export const heroGrad = "bg-gradient-to-b from-[#0a2f66] via-[#123f8c] to-[#1e5fc4]";
 export const ctaCls =
-  "w-full font-['Effra',sans-serif] font-medium text-[16px] py-[16px] rounded-[14px] transition-all";
+  "w-full font-['Effra',sans-serif] font-medium text-base md:text-lg py-4 md:py-5 rounded-[14px] transition-all";
 export const ctaEnabled =
   "bg-[#FF8200] text-white shadow-[0_8px_20px_rgba(255,130,0,0.35)] hover:bg-[#e67500] active:scale-[0.98]";
 export const ctaDisabled = "bg-[#f0f0f0] text-[#b0b0b0] cursor-not-allowed";
+
+/* ---------- Responsive layout helpers ---------- */
+export const pagePadX = "px-5 md:px-8";
+export const pagePadXBtm = "px-5 md:px-8 pb-28 md:pb-32";
+export const bottomBarCls = "sticky bottom-0 left-0 right-0 bg-white border-t border-[#E2E8F0] p-4 md:p-5 z-20";
+export const bottomBarInner = "max-w-xl mx-auto";
+export const sectionTitle = "font-['Effra',sans-serif] font-bold text-xl md:text-2xl text-[#383838]";
+export const sectionDesc = "font-['Effra',sans-serif] text-sm md:text-base text-[#707070] leading-5 md:leading-6";
 
 /* ---------- Role indicator badges (Staff assists / Customer verifies) ---------- */
 type RoleType = "staff" | "customer";
@@ -153,11 +161,11 @@ export function HeroPattern({ id = "staffDots" }: { id?: string }) {
         <rect width="100%" height="100%" fill={`url(#${id})`} />
       </svg>
       <div
-        className="absolute -top-[70px] -right-[50px] w-[240px] h-[240px] rounded-full"
+        className="absolute -top-[70px] -right-[50px] w-40 md:w-60 h-40 md:h-60 rounded-full"
         style={{ background: "radial-gradient(circle, rgba(255,130,0,0.32), transparent 68%)" }}
       />
       <div
-        className="absolute -bottom-[90px] -left-[70px] w-[280px] h-[280px] rounded-full"
+        className="absolute -bottom-[90px] -left-[70px] w-52 md:w-72 h-52 md:h-72 rounded-full"
         style={{ background: "radial-gradient(circle, rgba(91,141,239,0.38), transparent 70%)" }}
       />
     </div>
@@ -179,20 +187,20 @@ export function StaffHeader({
   const blue = variant === "blue";
   const stroke = blue ? "white" : "#383838";
   return (
-    <div className={`relative h-[64px] flex items-center px-[20px] shrink-0 ${blue ? "" : "border-b border-[#f0f0f0]"}`}>
+    <div className={`relative h-14 md:h-16 flex items-center px-5 md:px-8 shrink-0 ${blue ? "" : "border-b border-[#f0f0f0]"}`}>
       {onBack && (
-        <motion.button whileTap={{ scale: 0.88 }} onClick={onBack} className={`w-[36px] h-[36px] flex items-center justify-center rounded-full ${blue ? "bg-white/10" : "bg-[#f4f6f8]"}`}>
+        <motion.button whileTap={{ scale: 0.88 }} onClick={onBack} className={`w-9 h-9 flex items-center justify-center rounded-full ${blue ? "bg-white/10" : "bg-[#f4f6f8]"}`}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M15 18L9 12L15 6" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </motion.button>
       )}
-      <div className={`flex-1 text-center ${onBack ? "mr-[36px]" : ""}`}>
-        <span className={`font-['Effra',sans-serif] font-bold text-[17px] ${blue ? "text-white" : "text-[#383838]"}`}>
+      <div className={`flex-1 text-center ${onBack ? "mr-9" : ""}`}>
+        <span className={`font-['Effra',sans-serif] font-bold text-lg md:text-xl ${blue ? "text-white" : "text-[#383838]"}`}>
           {title}
         </span>
       </div>
-      {right && <div className="absolute right-[20px]">{right}</div>}
+      {right && <div className="absolute right-5 md:right-8">{right}</div>}
     </div>
   );
 }
@@ -221,14 +229,14 @@ export function StaffProgressTracker({
   const label = labels[Math.min(currentStep - 1, labels.length - 1)] || "";
   const percentage = Math.round((currentStep / totalSteps) * 100);
   return (
-    <div className="w-full px-[24px] py-[12px] bg-white">
-      <div className="flex items-center justify-between mb-[8px]">
-        <p className="font-['Effra',sans-serif] font-bold text-[13px] text-[#383838]">
+    <div className="w-full px-6 md:px-8 py-3 bg-white">
+      <div className="flex items-center justify-between mb-2">
+        <p className="font-['Effra',sans-serif] font-bold text-sm text-[#383838]">
           {label} — Step {currentStep} of {totalSteps}
         </p>
-        <p className="font-['Effra',sans-serif] font-bold text-[13px] text-[#FF8200]">{percentage}%</p>
+        <p className="font-['Effra',sans-serif] font-bold text-sm text-[#FF8200]">{percentage}%</p>
       </div>
-      <div className="flex gap-[4px]">
+      <div className="flex gap-1">
         {Array.from({ length: totalSteps }).map((_, i) => (
           <div key={i} className="h-[5px] flex-1 rounded-[3px] bg-[#eceef1] overflow-hidden">
             {i < currentStep && (
@@ -433,7 +441,7 @@ export function ConfettiBurst({ count = 26 }: { count?: number }) {
       {pieces.map((p, i) => (
         <motion.div
           key={i}
-          className="absolute left-1/2 top-[80px]"
+          className="absolute left-1/2 top-20"
           style={{
             width: p.w,
             height: p.round ? p.w : p.h,

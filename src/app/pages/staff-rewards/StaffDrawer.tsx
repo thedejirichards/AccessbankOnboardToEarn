@@ -52,21 +52,21 @@ export default function StaffDrawer({ open, onClose }: { open: boolean; onClose:
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 260 }}
-            className="absolute top-0 left-0 bottom-0 w-[78%] max-w-[300px] bg-white z-40 shadow-[8px_0_30px_rgba(16,24,40,0.18)] flex flex-col"
+            className="absolute top-0 left-0 bottom-0 w-[80%] md:w-[75%] max-w-[320px] bg-white z-40 shadow-[8px_0_30px_rgba(16,24,40,0.18)] flex flex-col"
           >
-            <div className={`${heroGrad} px-[20px] pt-[30px] pb-[20px]`}>
-              <div className="flex items-center gap-[12px]">
+            <div className={`${heroGrad} px-5 md:px-6 pt-8 pb-5`}>
+              <div className="flex items-center gap-3">
                 <div
-                  className="w-[48px] h-[48px] rounded-full flex items-center justify-center shrink-0 border-2 border-white/30"
+                  className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 border-2 border-white/30"
                   style={{ background: avatarGradient(currentStaff.name) }}
                 >
-                  <span className="font-['Effra',sans-serif] font-bold text-[18px] text-white">
+                  <span className="font-['Effra',sans-serif] font-bold text-lg text-white">
                     {currentStaff.name.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <p className="font-['Effra',sans-serif] font-bold text-[15px] text-white">{currentStaff.name}</p>
-                  <p className="font-['Effra',sans-serif] text-[11.5px] text-white/70">
+                  <p className="font-['Effra',sans-serif] font-bold text-[15px] md:text-base text-white">{currentStaff.name}</p>
+                  <p className="font-['Effra',sans-serif] text-xs text-white/70">
                     Rank #{currentStaff.rank} · {currentStaff.points.toLocaleString()} pts
                   </p>
                 </div>
@@ -78,12 +78,12 @@ export default function StaffDrawer({ open, onClose }: { open: boolean; onClose:
                 <button
                   key={it.id}
                   onClick={() => go(it.route)}
-                  className="w-full flex items-center gap-[14px] px-[20px] py-[15px] hover:bg-[#f4f6fa] active:bg-[#ebf3ff] transition-colors text-left"
+                  className="w-full flex items-center gap-3.5 px-5 md:px-6 py-4 hover:bg-[#f4f6fa] active:bg-[#ebf3ff] transition-colors text-left"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d={it.d} stroke="#003883" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <span className="font-['Effra',sans-serif] font-medium text-[14px] text-[#26282b]">{it.label}</span>
+                  <span className="font-['Effra',sans-serif] font-medium text-sm text-[#26282b]">{it.label}</span>
                 </button>
               ))}
             </div>
@@ -91,7 +91,7 @@ export default function StaffDrawer({ open, onClose }: { open: boolean; onClose:
             <div className="border-t border-[#f0f0f0] py-[10px]">
               <button
                 onClick={logOut}
-                className="w-full flex items-center gap-[14px] px-[20px] py-[15px] hover:bg-[#fdeaea] active:bg-[#fbdcdc] transition-colors text-left"
+                className="w-full flex items-center gap-3.5 px-5 md:px-6 py-4 hover:bg-[#fdeaea] active:bg-[#fbdcdc] transition-colors text-left"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
@@ -102,7 +102,7 @@ export default function StaffDrawer({ open, onClose }: { open: boolean; onClose:
                     strokeLinejoin="round"
                   />
                 </svg>
-                <span className="font-['Effra',sans-serif] font-medium text-[14px] text-[#dc2626]">Log out</span>
+                <span className="font-['Effra',sans-serif] font-medium text-sm text-[#dc2626]">Log out</span>
               </button>
             </div>
           </motion.div>

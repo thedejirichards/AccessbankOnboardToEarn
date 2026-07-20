@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import MobileLayout from "../../components/MobileLayout";
-import { StaffHeader, StaffProgressTracker, ToggleSwitch, RadioOption, FloatingField, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels } from "./StaffComponents";
+import { StaffHeader, StaffProgressTracker, ToggleSwitch, RadioOption, FloatingField, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels, pagePadXBtm, bottomBarCls, bottomBarInner, sectionTitle, sectionDesc } from "./StaffComponents";
 import { patchDraft, type IdType } from "./onboardingDraft";
 
 type SubStep = "terms" | "identity";
@@ -79,14 +79,14 @@ export default function StaffTermsIdentityPage() {
         <StaffHeader title={sub === "terms" ? "Terms & Conditions" : "Identity Verification"} onBack={goBack} />
         <StaffProgressTracker currentStep={2} totalSteps={4} labels={journeyLabels} />
 
-        <div className="flex-1 overflow-y-auto px-[24px] pt-[10px] pb-[120px]">
+        <div className={`flex-1 overflow-y-auto ${pagePadXBtm} pt-2`}>
           <AnimatePresence mode="wait">
             {sub === "terms" && (
               <motion.div key="terms" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
                 {/* 1. Cryptocurrency attestation */}
-                <div className={`${cardCls} p-[18px] mb-[16px]`}>
-                  <div className="flex items-start justify-between gap-[14px]">
-                    <p className="font-['Effra',sans-serif] text-[13px] text-[#4b5563] leading-[19px]">
+                <div className={`${cardCls} p-4 md:p-5 mb-4`}>
+                  <div className="flex items-start justify-between gap-4">
+                    <p className="font-['Effra',sans-serif] text-sm text-[#4b5563] leading-5 md:leading-6">
                       I/We, hereby confirm that my/our account will not be used for any cryptocurrency transactions. If
                       such transactions occur, this serves as my/our instruction to close the account in accordance with
                       the Cease &amp; Desist notice above.
@@ -96,53 +96,53 @@ export default function StaffTermsIdentityPage() {
                 </div>
 
                 {/* 2. Politically Exposed Person */}
-                <div className={`${cardCls} p-[18px] mb-[16px]`}>
-                  <p className="font-['Effra',sans-serif] font-bold text-[14px] text-[#26282b] mb-[6px]">
+                <div className={`${cardCls} p-4 md:p-5 mb-4`}>
+                  <p className="font-['Effra',sans-serif] font-bold text-sm md:text-[15px] text-[#26282b] mb-2">
                     Are you a Politically Exposed Person?
                   </p>
-                  <p className="font-['Effra',sans-serif] text-[12.5px] text-[#9ca3af] leading-[17px] mb-[12px]">
+                  <p className="font-['Effra',sans-serif] text-xs md:text-sm text-[#9ca3af] leading-5 md:leading-6 mb-3">
                     A Politically Exposed Person (PEP) is someone in a high-ranking public office or their close associate
                     or family member.
                   </p>
-                  <div className="flex flex-col gap-[2px]">
+                  <div className="flex flex-col gap-0.5">
                     <RadioOption label="No" selected={pep === "no"} onSelect={() => setPep("no")} />
                     <RadioOption label="Yes" selected={pep === "yes"} onSelect={() => setPep("yes")} />
                   </div>
                 </div>
 
                 {/* 3. Residency */}
-                <div className={`${cardCls} p-[18px] mb-[16px]`}>
-                  <p className="font-['Effra',sans-serif] font-bold text-[14px] text-[#26282b] mb-[12px]">
+                <div className={`${cardCls} p-4 md:p-5 mb-4`}>
+                  <p className="font-['Effra',sans-serif] font-bold text-sm md:text-[15px] text-[#26282b] mb-3">
                     Are you a resident in Nigeria?
                   </p>
-                  <div className="flex flex-col gap-[2px]">
+                  <div className="flex flex-col gap-0.5">
                     <RadioOption label="No" selected={resident === "no"} onSelect={() => setResident("no")} />
                     <RadioOption label="Yes" selected={resident === "yes"} onSelect={() => setResident("yes")} />
                   </div>
                 </div>
 
                 {/* 4. Terms and Conditions */}
-                <div className={`${cardCls} p-[18px] mb-[16px]`}>
-                  <div className="flex items-start justify-between gap-[14px] mb-[8px]">
-                    <p className="font-['Effra',sans-serif] text-[13.5px] text-[#26282b] leading-[19px]">
+                <div className={`${cardCls} p-4 md:p-5 mb-4`}>
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <p className="font-['Effra',sans-serif] text-sm md:text-[15px] text-[#26282b] leading-5 md:leading-6">
                       I agree to the Terms and Conditions
                     </p>
                     <ToggleSwitch checked={termsAccepted} onChange={setTermsAccepted} />
                   </div>
-                  <button type="button" className="font-['Effra',sans-serif] text-[12.5px] font-medium text-[#003883] hover:underline">
+                  <button type="button" className="font-['Effra',sans-serif] text-xs md:text-sm font-medium text-[#003883] hover:underline">
                     Read Terms and Conditions
                   </button>
                 </div>
 
                 {/* 5. Personal Data Consent */}
-                <div className={`${cardCls} p-[18px]`}>
-                  <div className="flex items-start justify-between gap-[14px] mb-[8px]">
-                    <p className="font-['Effra',sans-serif] text-[13.5px] text-[#26282b] leading-[19px]">
+                <div className={`${cardCls} p-4 md:p-5`}>
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <p className="font-['Effra',sans-serif] text-sm md:text-[15px] text-[#26282b] leading-5 md:leading-6">
                       I consent to Access Bank's use of my data.
                     </p>
                     <ToggleSwitch checked={dataConsent} onChange={setDataConsent} />
                   </div>
-                  <button type="button" className="font-['Effra',sans-serif] text-[12.5px] font-medium text-[#003883] hover:underline">
+                  <button type="button" className="font-['Effra',sans-serif] text-xs md:text-sm font-medium text-[#003883] hover:underline">
                     Read personal data use consent
                   </button>
                 </div>
@@ -151,8 +151,8 @@ export default function StaffTermsIdentityPage() {
 
             {sub === "identity" && (
               <motion.div key="identity" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
-                <h2 className="font-['Effra',sans-serif] font-bold text-[20px] text-[#383838] mb-[6px]">Verify identity</h2>
-                <p className="font-['Effra',sans-serif] text-[14px] text-[#707070] leading-[20px] mb-[20px]">
+                <h2 className={`${sectionTitle} mb-1`}>Verify identity</h2>
+                <p className={`${sectionDesc} mb-5`}>
                   Choose an identification method and enter the customer's details. We'll run background checks
                   automatically once you continue.
                 </p>
@@ -160,28 +160,28 @@ export default function StaffTermsIdentityPage() {
                 <AnimatePresence>
                   {error && (
                     <motion.div initial={{ opacity: 0, y: -8, height: 0 }} animate={{ opacity: 1, y: 0, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                      <div className="bg-[#fdeaea] rounded-[14px] p-[16px] mb-[20px]">
-                        <p className="font-['Effra',sans-serif] font-bold text-[13.5px] text-[#dc2626] mb-[4px]">{failureCopy[error].title}</p>
-                        <p className="font-['Effra',sans-serif] text-[12.5px] text-[#a83232] leading-[18px]">{failureCopy[error].message}</p>
+                      <div className="bg-[#fdeaea] rounded-2xl p-4 md:p-5 mb-5">
+                        <p className="font-['Effra',sans-serif] font-bold text-sm md:text-[15px] text-[#dc2626] mb-1">{failureCopy[error].title}</p>
+                        <p className="font-['Effra',sans-serif] text-xs md:text-sm text-[#a83232] leading-5 md:leading-6">{failureCopy[error].message}</p>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                <label className="font-['Effra',sans-serif] text-[12px] text-[#707070] mb-[6px] block">Identification method</label>
-                <div className="flex gap-[8px] mb-[16px]">
+                <label className="font-['Effra',sans-serif] text-xs md:text-sm text-[#707070] mb-2 block">Identification method</label>
+                <div className="flex gap-2 mb-4">
                   {(["bvn", "nin"] as IdType[]).map((t) => (
                     <button
                       key={t}
                       onClick={() => { setIdType(t); setIdNumber(""); setError(null); }}
-                      className={`flex-1 py-[11px] rounded-[12px] font-['Effra',sans-serif] font-medium text-[13px] border-2 transition-all active:scale-[0.97] ${idType === t ? "border-[#003883] bg-[#ebf3ff] text-[#003883] shadow-[0_0_0_4px_#ebf3ff]" : "border-[#e6e8ec] text-[#707070] hover:border-[#c9cdd4]"}`}
+                      className={`flex-1 py-3 rounded-xl font-['Effra',sans-serif] font-medium text-sm border-2 transition-all active:scale-[0.97] ${idType === t ? "border-[#003883] bg-[#ebf3ff] text-[#003883] shadow-[0_0_0_4px_#ebf3ff]" : "border-[#e6e8ec] text-[#707070] hover:border-[#c9cdd4]"}`}
                     >
                       {t.toUpperCase()}
                     </button>
                   ))}
                 </div>
 
-                <div className="mb-[16px]">
+                <div className="mb-4">
                   <FloatingField
                     label={`${idType.toUpperCase()} (11 digits)`}
                     value={idNumber}
@@ -190,10 +190,10 @@ export default function StaffTermsIdentityPage() {
                     maxLength={11}
                   />
                 </div>
-                <div className="mb-[16px]">
+                <div className="mb-4">
                   <FloatingField label="Date of birth" value={dob} onChange={setDob} type="date" />
                 </div>
-                <div className="mb-[16px]">
+                <div className="mb-4">
                   <FloatingField label="Customer email address" value={email} onChange={setEmail} type="email" />
                 </div>
               </motion.div>
@@ -201,8 +201,8 @@ export default function StaffTermsIdentityPage() {
           </AnimatePresence>
         </div>
 
-        <div className="sticky bottom-0 left-0 right-0 bg-white border-t border-[#E2E8F0] p-[16px] z-20">
-          <div className="max-w-[430px] mx-auto">
+        <div className={bottomBarCls}>
+          <div className={bottomBarInner}>
             {sub === "terms" && (
               <button onClick={submitTerms} disabled={!termsReady} className={`${ctaCls} ${termsReady ? ctaEnabled : ctaDisabled}`}>
                 Continue

@@ -61,7 +61,7 @@ export default function StaffHubPage() {
   return (
     <MobileLayout>
       <div className="h-full flex flex-col bg-[#f4f6fa]">
-        <div className={`relative ${heroGrad} pb-[26px] rounded-b-[28px] shadow-[0_12px_30px_rgba(10,47,102,0.25)]`}>
+        <div className={`relative ${heroGrad} pb-7 md:pb-8 rounded-b-3xl shadow-[0_12px_30px_rgba(10,47,102,0.25)]`}>
           <HeroPattern id="hubDots" />
           <div className="relative">
             <StaffHeader
@@ -70,7 +70,7 @@ export default function StaffHubPage() {
               right={
                 <button
                   onClick={() => setDrawerOpen(true)}
-                  className="w-[36px] h-[36px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
                 >
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
                     <path d="M4 6h16M4 12h16M4 18h16" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
@@ -78,27 +78,27 @@ export default function StaffHubPage() {
                 </button>
               }
             />
-            <div className="px-[20px] pt-[4px]">
-              <p className="font-['Effra',sans-serif] text-[12px] text-white/65">Good afternoon,</p>
-              <p className="font-['Effra',sans-serif] font-bold text-[21px] text-white">{currentStaff.name}</p>
+            <div className="px-5 md:px-8 pt-1">
+              <p className="font-['Effra',sans-serif] text-xs md:text-sm text-white/65">Good afternoon,</p>
+              <p className="font-['Effra',sans-serif] font-bold text-xl md:text-2xl text-white">{currentStaff.name}</p>
 
               <motion.button
                 whileTap={{ scale: 0.98 }}
                 onClick={() => navigate("/rewards")}
-                className={`mt-[14px] w-full ${glassCls} rounded-[18px] p-[14px] flex items-center gap-[14px] text-left hover:bg-white/[0.16] transition-colors`}
+                className={`mt-3 md:mt-4 w-full ${glassCls} rounded-2xl p-3.5 md:p-4 flex items-center gap-3.5 md:gap-4 text-left hover:bg-white/[0.16] transition-colors`}
               >
                 <TierRing progress={tierProgress} color="#FF8200" size={62}>
                   <div className="text-center">
                     <p className="font-['Effra',sans-serif] text-[8.5px] text-white/60 leading-none">RANK</p>
-                    <p className="font-['Effra',sans-serif] font-bold text-[19px] text-white leading-tight">#{currentStaff.rank}</p>
+                    <p className="font-['Effra',sans-serif] font-bold text-lg md:text-xl text-white leading-tight">#{currentStaff.rank}</p>
                   </div>
                 </TierRing>
                 <div className="flex-1">
-                  <p className="font-['Effra',sans-serif] font-bold text-[16px] text-white">
+                  <p className="font-['Effra',sans-serif] font-bold text-base md:text-lg text-white">
                     <AnimatedNumber value={currentStaff.points} /> pts · {tier.name} Tier
                   </p>
                   {next && (
-                    <p className="font-['Effra',sans-serif] text-[11px] text-white/70 mt-[2px]">
+                    <p className="font-['Effra',sans-serif] text-xs text-white/70 mt-0.5">
                       {(next.min - currentStaff.points).toLocaleString()} pts to {next.name}
                     </p>
                   )}
@@ -111,8 +111,8 @@ export default function StaffHubPage() {
           </div>
         </div>
 
-        <div className="flex-1 px-[20px] pt-[18px] pb-[40px]">
-          <div className="flex flex-col gap-[12px]">
+        <div className="flex-1 px-5 md:px-8 pt-4 md:pt-5 pb-10">
+          <div className="flex flex-col gap-3">
             {actions.map((a, i) => (
               <motion.button
                 key={a.id}
@@ -121,17 +121,17 @@ export default function StaffHubPage() {
                 transition={{ delay: 0.08 + i * 0.07, type: "spring", damping: 20, stiffness: 260 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate(a.route)}
-                className={`group w-full flex items-center gap-[14px] ${cardCls} px-[16px] py-[16px] text-left`}
+                className={`group w-full flex items-center gap-3.5 md:gap-4 ${cardCls} px-4 md:px-5 py-4 md:py-5 text-left`}
               >
                 <div
-                  className="w-[48px] h-[48px] rounded-[14px] flex items-center justify-center shrink-0"
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
                   style={{ background: a.grad, boxShadow: `0 6px 14px ${a.glow}` }}
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">{a.icon}</svg>
                 </div>
                 <div className="flex-1">
-                  <p className="font-['Effra',sans-serif] font-bold text-[15px] text-[#26282b] leading-tight">{a.title}</p>
-                  <p className="font-['Effra',sans-serif] text-[12px] text-[#9ca3af] leading-tight mt-[3px]">{a.desc}</p>
+                  <p className="font-['Effra',sans-serif] font-bold text-[15px] md:text-base text-[#26282b] leading-tight">{a.title}</p>
+                  <p className="font-['Effra',sans-serif] text-xs md:text-sm text-[#9ca3af] leading-tight mt-1">{a.desc}</p>
                 </div>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-[3px]">
                   <path d="M9 6l6 6-6 6" stroke="#c4c4c4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -141,9 +141,9 @@ export default function StaffHubPage() {
           </div>
 
           {/* My recent customers */}
-          <div className="flex items-center justify-between mt-[26px] mb-[10px]">
-            <p className="font-['Effra',sans-serif] font-bold text-[14px] text-[#26282b]">My recent customers</p>
-            <button onClick={() => navigate("/rewards")} className="font-['Effra',sans-serif] font-medium text-[12px] text-[#003883]">
+          <div className="flex items-center justify-between mt-6 md:mt-7 mb-2.5">
+            <p className="font-['Effra',sans-serif] font-bold text-sm md:text-[15px] text-[#26282b]">My recent customers</p>
+            <button onClick={() => navigate("/rewards")} className="font-['Effra',sans-serif] font-medium text-xs md:text-sm text-[#003883]">
               See all
             </button>
           </div>
@@ -154,13 +154,13 @@ export default function StaffHubPage() {
             className={`${cardCls} overflow-hidden`}
           >
             {demoCustomers.map((c, i) => (
-              <div key={c.id} className={`flex items-center gap-[12px] px-[16px] py-[13px] ${i < demoCustomers.length - 1 ? "border-b border-[#f4f5f7]" : ""}`}>
-                <div className="w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0" style={{ background: avatarGradient(c.name) }}>
-                  <span className="font-['Effra',sans-serif] font-bold text-[13px] text-white">{c.name.charAt(0)}</span>
+              <div key={c.id} className={`flex items-center gap-3 px-4 md:px-5 py-3.5 md:py-4 ${i < demoCustomers.length - 1 ? "border-b border-[#f4f5f7]" : ""}`}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: avatarGradient(c.name) }}>
+                  <span className="font-['Effra',sans-serif] font-bold text-sm text-white">{c.name.charAt(0)}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-['Effra',sans-serif] font-bold text-[13px] text-[#26282b] leading-tight">{c.name}</p>
-                  <div className="flex flex-wrap gap-[5px] mt-[4px]">
+                  <p className="font-['Effra',sans-serif] font-bold text-sm text-[#26282b] leading-tight">{c.name}</p>
+                  <div className="flex flex-wrap gap-1 mt-1">
                     <StatusChip label={c.funding.label} tone={c.funding.tone} />
                     <StatusChip label={c.transaction.label} tone={c.transaction.tone} />
                   </div>

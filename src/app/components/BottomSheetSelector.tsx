@@ -65,9 +65,9 @@ export default function BottomSheetSelector({
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setOpen(true)}
-        className={`relative w-full text-left bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] font-['Effra',sans-serif] text-[14px] outline-none transition-all ${disabled ? "opacity-50 cursor-not-allowed border-[#E2E8F0]" : "cursor-pointer border-[#E2E8F0] active:border-[#003883]"}`}
+        className={`relative w-full text-left bg-white border rounded-lg px-4 pt-[26px] pb-2.5 font-['Effra',sans-serif] text-sm outline-none transition-all ${disabled ? "opacity-50 cursor-not-allowed border-[#E2E8F0]" : "cursor-pointer border-[#E2E8F0] active:border-[#003883]"}`}
       >
-        <span className={`absolute left-[16px] font-['Effra',sans-serif] pointer-events-none transition-all ${filled ? "top-[10px] text-[10px] text-[#64748B]" : "top-1/2 -translate-y-1/2 text-[14px] text-[#64748B]"}`}>
+        <span className={`absolute left-4 font-['Effra',sans-serif] pointer-events-none transition-all ${filled ? "top-2.5 text-[10px] text-[#64748B]" : "top-1/2 -translate-y-1/2 text-sm text-[#64748B]"}`}>
           {label}
         </span>
         <span className={filled ? "text-[#1E293B]" : "text-transparent"}>
@@ -80,7 +80,7 @@ export default function BottomSheetSelector({
           <path d="M6 9l6 6 6-6" stroke="#64748B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-      {hint && <div className="mt-[6px] font-['Effra',sans-serif] text-[11px] text-[#94A3B8]">{hint}</div>}
+      {hint && <div className="mt-1.5 font-['Effra',sans-serif] text-xs text-[#94A3B8]">{hint}</div>}
 
       {/* Bottom sheet */}
       <AnimatePresence>
@@ -110,13 +110,13 @@ export default function BottomSheetSelector({
               </div>
 
               {/* Header */}
-              <div className="flex items-center justify-between px-[20px] py-[12px] border-b border-[#f0f0f0]">
-                <h3 className="font-['Effra',sans-serif] font-bold text-[17px] text-[#383838]">
+              <div className="flex items-center justify-between px-5 py-3 border-b border-[#f0f0f0]">
+                <h3 className="font-['Effra',sans-serif] font-bold text-lg text-[#383838]">
                   {sheetTitle || label}
                 </h3>
                 <button
                   onClick={() => setOpen(false)}
-                  className="w-[32px] h-[32px] rounded-full hover:bg-[#f4f6f8] flex items-center justify-center transition-colors"
+                  className="w-8 h-8 rounded-full hover:bg-[#f4f6f8] flex items-center justify-center transition-colors"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M18 6L6 18M6 6l12 12" stroke="#383838" strokeWidth="2" strokeLinecap="round" />
@@ -126,9 +126,9 @@ export default function BottomSheetSelector({
 
               {/* Search */}
               {showSearch && (
-                <div className="px-[20px] pt-[12px] pb-[8px]">
+                <div className="px-5 pt-3 pb-2">
                   <div className="relative">
-                    <svg className="absolute left-[12px] top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none">
                       <circle cx="11" cy="11" r="7" stroke="#94A3B8" strokeWidth="2" />
                       <path d="M20 20l-3.5-3.5" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" />
                     </svg>
@@ -137,10 +137,10 @@ export default function BottomSheetSelector({
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={searchPlaceholder || `Search ${label.toLowerCase()}…`}
-                      className="w-full bg-[#f4f6f8] rounded-[10px] pl-[36px] pr-[14px] py-[11px] font-['Effra',sans-serif] text-[14px] text-[#1E293B] outline-none placeholder:text-[#94A3B8] focus:ring-2 focus:ring-[#003883]/20 transition-shadow"
+                      className="w-full bg-[#f4f6f8] rounded-xl pl-9 pr-3.5 py-2.5 font-['Effra',sans-serif] text-sm text-[#1E293B] outline-none placeholder:text-[#94A3B8] focus:ring-2 focus:ring-[#003883]/20 transition-shadow"
                     />
                     {query && (
-                      <button onClick={() => setQuery("")} className="absolute right-[10px] top-1/2 -translate-y-1/2">
+                      <button onClick={() => setQuery("")} className="absolute right-2.5 top-1/2 -translate-y-1/2">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                           <circle cx="12" cy="12" r="10" fill="#d1d5db" />
                           <path d="M15 9l-6 6M9 9l6 6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
@@ -152,10 +152,10 @@ export default function BottomSheetSelector({
               )}
 
               {/* Options list */}
-              <div ref={listRef} className="flex-1 overflow-y-auto px-[12px] py-[4px] overscroll-contain">
+              <div ref={listRef} className="flex-1 overflow-y-auto px-3 py-1 overscroll-contain">
                 {filtered.length === 0 ? (
-                  <div className="py-[32px] text-center">
-                    <p className="font-['Effra',sans-serif] text-[14px] text-[#94A3B8]">No results found</p>
+                  <div className="py-8 text-center">
+                    <p className="font-['Effra',sans-serif] text-sm text-[#94A3B8]">No results found</p>
                   </div>
                 ) : (
                   filtered.map((opt) => {
@@ -165,9 +165,9 @@ export default function BottomSheetSelector({
                         key={opt}
                         type="button"
                         onClick={() => select(opt)}
-                        className={`w-full flex items-center justify-between px-[16px] py-[14px] rounded-[12px] transition-colors ${selected ? "bg-[#ebf3ff]" : "hover:bg-[#f4f6f8] active:bg-[#eef1f5]"}`}
+                        className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${selected ? "bg-[#ebf3ff]" : "hover:bg-[#f4f6f8] active:bg-[#eef1f5]"}`}
                       >
-                        <span className={`font-['Effra',sans-serif] text-[14px] ${selected ? "font-bold text-[#003883]" : "text-[#26282b]"}`}>
+                        <span className={`font-['Effra',sans-serif] text-sm ${selected ? "font-bold text-[#003883]" : "text-[#26282b]"}`}>
                           {opt}
                         </span>
                         {selected && (

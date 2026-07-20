@@ -22,41 +22,41 @@ export default function EntraAccountPickerPage() {
 
   return (
     <MobileLayout overlayClassName="bg-white">
-      <div className="h-full w-full flex items-center justify-center px-[20px]">
-        <div className="w-full max-w-[360px] bg-white rounded-[8px] shadow-[0_2px_12px_rgba(0,0,0,0.18)] px-[28px] py-[36px]">
-          <div className="flex items-center gap-[10px] mb-[36px]">
+      <div className="h-full w-full flex items-center justify-center px-5">
+        <div className="w-full max-w-sm bg-white rounded-lg shadow-[0_2px_12px_rgba(0,0,0,0.18)] px-7 md:px-8 py-9 md:py-10">
+          <div className="flex items-center gap-2.5 mb-9">
             <MicrosoftLogo />
-            <span className="font-['Segoe_UI',sans-serif] text-[19px] text-[#5e5e5e]">Microsoft</span>
+            <span className="font-['Segoe_UI',sans-serif] text-lg md:text-xl text-[#5e5e5e]">Microsoft</span>
           </div>
 
-          <h1 className="font-['Segoe_UI',sans-serif] font-semibold text-[24px] text-[#1b1b1b] mb-[26px]">
+          <h1 className="font-['Segoe_UI',sans-serif] font-semibold text-2xl md:text-[26px] text-[#1b1b1b] mb-6 md:mb-7">
             Pick an account
           </h1>
 
           <button
             onClick={chooseAccount}
-            className="w-full flex items-center gap-[16px] py-[10px] -mx-[6px] px-[6px] rounded-[4px] hover:bg-[#f5f5f5] transition-colors text-left"
+            className="w-full flex items-center gap-4 py-2.5 -mx-1.5 px-1.5 rounded hover:bg-[#f5f5f5] transition-colors text-left"
           >
-            <div className="w-[40px] h-[40px] rounded-full bg-[#e6e6e6] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#e6e6e6] flex items-center justify-center shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="8" r="3.4" stroke="#5e5e5e" strokeWidth="1.6" />
                 <path d="M5 20a7 7 0 0114 0" stroke="#5e5e5e" strokeWidth="1.6" strokeLinecap="round" />
               </svg>
             </div>
-            <span className="flex-1 font-['Segoe_UI',sans-serif] text-[15px] text-[#1b1b1b]">{demoAccount}</span>
-            <span className="text-[#5e5e5e] text-[18px] leading-none px-[6px]">⋮</span>
+            <span className="flex-1 font-['Segoe_UI',sans-serif] text-[15px] md:text-base text-[#1b1b1b]">{demoAccount}</span>
+            <span className="text-[#5e5e5e] text-lg leading-none px-1.5">⋮</span>
           </button>
 
           <button
             onClick={useAnotherAccount}
-            className="w-full flex items-center gap-[16px] py-[10px] -mx-[6px] px-[6px] rounded-[4px] hover:bg-[#f5f5f5] transition-colors text-left"
+            className="w-full flex items-center gap-4 py-2.5 -mx-1.5 px-1.5 rounded hover:bg-[#f5f5f5] transition-colors text-left"
           >
-            <div className="w-[40px] h-[40px] rounded-full bg-[#e6e6e6] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#e6e6e6] flex items-center justify-center shrink-0">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M12 5v14M5 12h14" stroke="#5e5e5e" strokeWidth="1.8" strokeLinecap="round" />
               </svg>
             </div>
-            <span className="font-['Segoe_UI',sans-serif] text-[15px] text-[#1b1b1b]">Use another account</span>
+            <span className="font-['Segoe_UI',sans-serif] text-[15px] md:text-base text-[#1b1b1b]">Use another account</span>
           </button>
         </div>
       </div>
