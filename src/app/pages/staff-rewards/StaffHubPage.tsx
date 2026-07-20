@@ -24,7 +24,7 @@ const actions = [
     id: "onboard",
     title: "Onboard a Customer",
     desc: "Capture KYC in the field — offline capable",
-    route: "/staff-rewards/category",
+    route: "/staff-rewards/account",
     grad: "linear-gradient(135deg,#1e5fc4,#003883)",
     glow: "rgba(0,56,131,0.28)",
     icon: (

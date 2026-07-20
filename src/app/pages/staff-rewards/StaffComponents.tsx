@@ -11,6 +11,26 @@ export const ctaCls =
 export const ctaEnabled =
   "bg-[#FF8200] text-white shadow-[0_8px_20px_rgba(255,130,0,0.35)] hover:bg-[#e67500] active:scale-[0.98]";
 export const ctaDisabled = "bg-[#f0f0f0] text-[#b0b0b0] cursor-not-allowed";
+
+/* ---------- Role indicator badges (Staff assists / Customer verifies) ---------- */
+type RoleType = "staff" | "customer";
+const roleStyles: Record<RoleType, { bg: string; text: string; label: string }> = {
+  staff: { bg: "#f0f4fa", text: "#3b5998", label: "Staff assists" },
+  customer: { bg: "#e8f8ee", text: "#16753a", label: "Customer verifies" },
+};
+export function RoleBadge({ role }: { role: RoleType }) {
+  const s = roleStyles[role];
+  return (
+    <span
+      className="inline-flex items-center gap-[5px] px-[10px] py-[3px] rounded-full font-['Effra',sans-serif] font-semibold text-[10px] tracking-wide uppercase"
+      style={{ backgroundColor: s.bg, color: s.text }}
+    >
+      <span className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: s.text }} />
+      {s.label}
+    </span>
+  );
+}
+
 /* ---------- Floating-label input (matches the auto-top-up pages' pattern) ---------- */
 export function FloatingField({
   label,
@@ -181,18 +201,12 @@ export function StaffHeader({
 const staffLabels = ["Auth", "Capture", "Tier", "Credentials", "Send"];
 export const activationLabels = ["Login", "Change Password", "PIN", "Done"];
 
-/* ---------- Full customer onboarding journey step labels ---------- */
+/* ---------- Full customer onboarding journey step labels (4-screen flow) ---------- */
 export const journeyLabels = [
-  "Category",
-  "Type",
-  "Consent",
-  "Terms",
-  "Identity",
-  "Liveness",
-  "OTP",
-  "Review",
-  "Info",
-  "Create",
+  "Account & Consent",
+  "Terms & Identity",
+  "Verification",
+  "Complete",
 ];
 
 export function StaffProgressTracker({

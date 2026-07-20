@@ -2,7 +2,6 @@ const KEY = "staffOnboard_draft";
 
 export type IdType = "bvn" | "nin";
 export type AccountCategory = "individual" | "sme";
-export type OtpChannel = "sms" | "email" | "whatsapp";
 
 export interface OnboardingProfile {
   firstName: string;
@@ -31,14 +30,12 @@ export interface OnboardingDraft {
   dob?: string;
   phone?: string;
   email?: string;
+  emailVerified?: boolean;
   livenessFaceImage?: string; // data URL, "" if simulated (no camera)
-  otpChannel?: OtpChannel;
-  otpVerified?: boolean;
   profile?: OnboardingProfile;
   state?: string;
   lga?: string;
   street?: string;
-  signature?: string; // data URL
   accountNumber?: string;
   ro?: RelationshipOfficer;
 }

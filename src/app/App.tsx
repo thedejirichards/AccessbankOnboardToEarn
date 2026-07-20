@@ -5,16 +5,10 @@ import EntraPasswordPage from "./pages/EntraPasswordPage";
 import StaffHubPage from "./pages/staff-rewards/StaffHubPage";
 import StaffProfilePage from "./pages/staff-rewards/StaffProfilePage";
 import StaffCustomersPage from "./pages/staff-rewards/StaffCustomersPage";
-import StaffCategoryPage from "./pages/staff-rewards/StaffCategoryPage";
-import StaffAccountTypePage from "./pages/staff-rewards/StaffAccountTypePage";
-import StaffConsentPage from "./pages/staff-rewards/StaffConsentPage";
-import StaffTermsPage from "./pages/staff-rewards/StaffTermsPage";
-import StaffIdentityPage from "./pages/staff-rewards/StaffIdentityPage";
-import StaffLivenessPage from "./pages/staff-rewards/StaffLivenessPage";
-import StaffOtpPage from "./pages/staff-rewards/StaffOtpPage";
-import StaffReviewPage from "./pages/staff-rewards/StaffReviewPage";
-import StaffAdditionalInfoPage from "./pages/staff-rewards/StaffAdditionalInfoPage";
-import StaffSuccessPage from "./pages/staff-rewards/StaffSuccessPage";
+import StaffAccountConsentPage from "./pages/staff-rewards/StaffAccountConsentPage";
+import StaffTermsIdentityPage from "./pages/staff-rewards/StaffTermsIdentityPage";
+import StaffVerificationPage from "./pages/staff-rewards/StaffVerificationPage";
+import StaffCompletePage from "./pages/staff-rewards/StaffCompletePage";
 import RewardsPage from "./pages/staff-rewards/RewardsPage";
 
 const routes = [
@@ -25,16 +19,10 @@ const routes = [
   { path: "/staff-rewards", element: <StaffHubPage /> },
   { path: "/staff-rewards/profile", element: <StaffProfilePage /> },
   { path: "/staff-rewards/customers", element: <StaffCustomersPage /> },
-  { path: "/staff-rewards/category", element: <StaffCategoryPage /> },
-  { path: "/staff-rewards/account-type", element: <StaffAccountTypePage /> },
-  { path: "/staff-rewards/consent", element: <StaffConsentPage /> },
-  { path: "/staff-rewards/terms", element: <StaffTermsPage /> },
-  { path: "/staff-rewards/identity", element: <StaffIdentityPage /> },
-  { path: "/staff-rewards/liveness", element: <StaffLivenessPage /> },
-  { path: "/staff-rewards/otp", element: <StaffOtpPage /> },
-  { path: "/staff-rewards/review", element: <StaffReviewPage /> },
-  { path: "/staff-rewards/additional-info", element: <StaffAdditionalInfoPage /> },
-  { path: "/staff-rewards/success", element: <StaffSuccessPage /> },
+  { path: "/staff-rewards/account", element: <StaffAccountConsentPage /> },
+  { path: "/staff-rewards/terms-identity", element: <StaffTermsIdentityPage /> },
+  { path: "/staff-rewards/verification", element: <StaffVerificationPage /> },
+  { path: "/staff-rewards/complete", element: <StaffCompletePage /> },
   { path: "/rewards", element: <RewardsPage /> },
   { path: "*", element: <Navigate to="/" replace /> },
 ];
