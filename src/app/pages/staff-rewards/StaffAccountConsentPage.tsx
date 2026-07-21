@@ -42,6 +42,7 @@ export default function StaffAccountConsentPage() {
   const [termsDelivery, setTermsDelivery] = useState<TermsDelivery[]>([]);
   const [consentRead, setConsentRead] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [infoModalViewed, setInfoModalViewed] = useState(false);
   const [infoExplained, setInfoExplained] = useState(false);
 
   useEffect(() => { clearDraft(); }, []);
@@ -160,8 +161,9 @@ export default function StaffAccountConsentPage() {
 
             <button
               type="button"
-              onClick={() => setInfoExplained((prev) => !prev)}
-              className="flex items-start gap-[10px] w-full text-left mb-4"
+              onClick={() => { if (infoModalViewed) setInfoExplained((prev) => !prev); }}
+              className={`flex items-start gap-[10px] w-full text-left mb-4 ${!infoModalViewed ? "opacity-40 cursor-not-allowed" : ""}`}
+              disabled={!infoModalViewed}
             >
               <span className={`w-[20px] h-[20px] rounded-[6px] border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${infoExplained ? "border-[#003883] bg-[#003883]" : "border-[#c9cdd4]"}`}>
                 {infoExplained && (
@@ -247,7 +249,7 @@ export default function StaffAccountConsentPage() {
                 </li>
               </ul>
               <button
-                onClick={() => setShowInfoModal(false)}
+                onClick={() => { setShowInfoModal(false); setInfoModalViewed(true); }}
                 className={`w-full ${ctaCls} ${ctaEnabled}`}
               >
                 Got it
