@@ -6,6 +6,8 @@ interface MobileLayoutProps {
   overlayClassName?: string;
 }
 
+export const MOBILE_FRAME_ID = "mobile-frame-root";
+
 // Fully responsive layout — fills the viewport on all sizes.
 // On md+ screens, content is capped at a comfortable reading width and centered.
 // The decorative cover-image background is shown on lg+ for visual polish.
@@ -17,6 +19,7 @@ export default function MobileLayout({ children, className = "", overlayClassNam
         <div className="relative h-full w-full overflow-y-auto overflow-x-hidden">
           {children}
         </div>
+        <div id={MOBILE_FRAME_ID} className="absolute inset-0 pointer-events-none" />
       </div>
     </div>
   );

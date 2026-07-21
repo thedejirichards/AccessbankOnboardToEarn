@@ -9,10 +9,49 @@ import { nigerianStates, lgasByState } from "./nigeriaLocations";
 
 type SubStep = "info" | "success";
 
+function maskPhone(phone: string): string {
+  if (phone.length < 7) return phone || "—";
+  return phone.slice(0, 5) + "****" + phone.slice(-3);
+}
+
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between py-3">
+      <span className="font-['Effra',sans-serif] text-sm text-[#9ca3af]">{label}</span>
+      <div className="flex items-center gap-1.5">
+        <span className="font-['Effra',sans-serif] font-medium text-sm text-[#26282b] text-right">{value}</span>
+      </div>
+    </div>
+  );
+}
+
 const roPool: RelationshipOfficer[] = [
   { name: "Adaeze Nwankwo", email: "adaeze.nwankwo@accessbankplc.com", phone: "0803 210 4471" },
   { name: "Femi Adisa", email: "femi.adisa@accessbankplc.com", phone: "0805 662 9013" },
   { name: "Grace Okon", email: "grace.okon@accessbankplc.com", phone: "0701 348 8820" },
+];
+
+const accessBranches = [
+  "Adetokunbo Ademuwagun",
+  "Ajah",
+  "Akowonjo",
+  "Aspamda",
+  "Banana Island",
+  "Chevron",
+  "Effurun",
+  "Emporium",
+  "Enugu",
+  "GRA Ikeja",
+  "Ikeja Main",
+  "Ikoyi",
+  "Lekki",
+  "Maitama",
+  "Marina",
+  "Oshodi",
+  "Surulere",
+  "Toyota",
+  "Transcorp Hilton",
+  "Victoria Island",
 ];
 
 function generateAccountNumber(): string {
@@ -28,16 +67,21 @@ export default function StaffCompletePage() {
   const [sub, setSub] = useState<SubStep>("info");
   const [state, setState] = useState("");
   const [lga, setLga] = useState("");
+  const [town, setTown] = useState("");
   const [street, setStreet] = useState("");
+  const [buildingName, setBuildingName] = useState("");
+  const [apartment, setApartment] = useState("");
+  const [branch, setBranch] = useState("");
   const lgaOptions = state ? lgasByState[state] || [] : [];
   const selectState = (v: string) => { setState(v); setLga(""); };
   const [creating, setCreating] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [addressOpen, setAddressOpen] = useState(false);
 
-  const ready = state.trim().length > 1 && lga.trim().length > 1 && street.trim().length > 4;
+  const ready = state.trim().length > 1 && lga.trim().length > 1 && town.trim().length > 1 && street.trim().length > 0 && buildingName.trim().length > 0 && branch.trim().length > 0;
 
   const goBack = () => {
-    if (sub === "info") navigate("/staff-rewards/verification");
+    if (sub === "info") navigate("/staff-rewards/terms-identity");
   };
 
   const submit = () => {
@@ -45,7 +89,7 @@ export default function StaffCompletePage() {
     setCreating(true);
     setTimeout(() => {
       const ro = roPool[Math.floor(Math.random() * roPool.length)];
-      patchDraft({ state, lga, street, accountNumber: generateAccountNumber(), ro });
+      patchDraft({ state, lga, town, street, buildingName, apartment, branch, accountNumber: generateAccountNumber(), ro });
       setCreating(false);
       setSub("success");
     }, 1500);
@@ -53,7 +97,7 @@ export default function StaffCompletePage() {
 
   const fullName = draft.profile ? `${draft.profile.firstName} ${draft.profile.lastName}` : "The customer";
   const accountNumber = draft.accountNumber || "—";
-  const phone = draft.phone || "—";
+  const phone = (draft.phone || "—").replace(/^0/, "");
 
   const copyAccountNumber = async () => {
     try { await navigator.clipboard.writeText(accountNumber); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* no-op */ }
@@ -93,28 +137,91 @@ export default function StaffCompletePage() {
     <MobileLayout>
       <div className="bg-white h-full flex flex-col relative">
         {sub === "success" && <ConfettiBurst />}
-        {sub === "info" && <StaffHeader title="Address & Create" onBack={goBack} />}
+        {sub === "info" && <StaffHeader title="Customer Profile" onBack={goBack} />}
         {sub === "info" && <StaffProgressTracker currentStep={4} totalSteps={4} labels={journeyLabels} />}
 
         <div className={`flex-1 overflow-y-auto px-5 md:px-8 pt-2 pb-6 ${sub === "success" ? "pt-10 flex flex-col items-center" : ""}`}>
           <AnimatePresence mode="wait">
             {sub === "info" && (
               <motion.div key="info" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
-                <h2 className={`${sectionTitle} mb-1`}>Residential address</h2>
+                <h2 className={`${sectionTitle} mb-1`}>Review and Approve</h2>
                 <div className="mb-3"><RoleBadge role="staff" /></div>
                 <p className={`${sectionDesc} mb-5`}>
                   Enter the customer's residential address to complete the account setup.
                 </p>
 
-                <div className="mb-4">
-                  <BottomSheetSelector label="State" value={state} onChange={selectState} options={nigerianStates} sheetTitle="Select State" />
+                <div className="flex flex-col gap-4 mb-5">
+                  <div className="flex justify-center mb-1">
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white shadow-[0_8px_20px_rgba(16,24,40,0.14)] bg-[#ebf3ff] flex items-center justify-center">
+                      {draft.livenessFaceImage ? (
+                        <img src={draft.livenessFaceImage} alt="Customer" className="w-full h-full object-cover" />
+                      ) : (
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="9" r="3.4" stroke="#003883" strokeWidth="1.6" />
+                          <path d="M5 20a7 7 0 0114 0" stroke="#003883" strokeWidth="1.6" strokeLinecap="round" />
+                        </svg>
+                      )}
+                    </div>
+                  </div>
+                  <div className={`${cardCls} px-4 md:px-5 divide-y divide-[#f4f5f7]`}>
+                    <InfoRow label="First Name" value={draft.profile?.firstName || "—"} />
+                    <InfoRow label="Middle Name" value={draft.profile?.middleName || "Seyi"} />
+                    <InfoRow label="Last Name" value={draft.profile?.lastName || "—"} />
+                    <InfoRow label="Phone Number" value={maskPhone(draft.phone || "")} />
+                    <InfoRow label="Email Address" value={draft.email || "—"} />
+                    <InfoRow label="Date of Birth" value={draft.profile?.dob || draft.dob || "—"} />
+                    <InfoRow label="Gender" value={draft.profile?.gender || "—"} />
+                  </div>
                 </div>
-                <div className="mb-4">
-                  <BottomSheetSelector label="LGA" value={lga} onChange={setLga} options={lgaOptions} disabled={!state} hint={!state ? "Select a state first" : undefined} sheetTitle="Select LGA" />
-                </div>
-                <div className="mb-4">
-                  <FloatingField label="Street address" value={street} onChange={setStreet} />
-                </div>
+
+                {!addressOpen ? (
+                  <button
+                    onClick={() => setAddressOpen(true)}
+                    className={`w-full ${cardCls} p-4 flex items-center gap-3 text-left hover:bg-[#f9fafb] active:scale-[0.98] transition-all`}
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#ebf3ff] flex items-center justify-center shrink-0">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#003883" strokeWidth="1.8" />
+                        <circle cx="12" cy="9" r="2.5" stroke="#003883" strokeWidth="1.8" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-['Effra',sans-serif] font-semibold text-sm text-[#26282b]">Address</p>
+                      <p className="font-['Effra',sans-serif] text-xs text-[#9ca3af]">Tap to enter address details</p>
+                    </div>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </button>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <div className={`${cardCls} p-4`}>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-[#ebf3ff] flex items-center justify-center shrink-0">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#003883" strokeWidth="1.8" />
+                            <circle cx="12" cy="9" r="2.5" stroke="#003883" strokeWidth="1.8" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-['Effra',sans-serif] font-semibold text-sm text-[#26282b]">Residential address</p>
+                          <p className="font-['Effra',sans-serif] text-xs text-[#9ca3af]">Enter the customer's residential address</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <BottomSheetSelector label={<span>State <span className="text-[#dc2626]">*</span></span>} value={state} onChange={selectState} options={nigerianStates} sheetTitle="Select State" />
+                        <BottomSheetSelector label={<span>LGA <span className="text-[#dc2626]">*</span></span>} value={lga} onChange={setLga} options={lgaOptions} disabled={!state} hint={!state ? "Select a state first" : undefined} sheetTitle="Select LGA" />
+                        <BottomSheetSelector label={<span>Town <span className="text-[#dc2626]">*</span></span>} value={town} onChange={setTown} options={lgaOptions} disabled={!lga} hint={!lga ? "Select an LGA first" : undefined} sheetTitle="Select Town" />
+                        <FloatingField label={<span>Street address <span className="text-[#dc2626]">*</span></span>} value={street} onChange={setStreet} />
+                        <FloatingField label={<span>Building Name / Number <span className="text-[#dc2626]">*</span></span>} value={buildingName} onChange={setBuildingName} />
+                        <FloatingField label="Apartment Name / Number" value={apartment} onChange={setApartment} />
+                        <BottomSheetSelector label={<span>Preferred Access Bank Branch <span className="text-[#dc2626]">*</span></span>} value={branch} onChange={setBranch} options={accessBranches} sheetTitle="Select Branch" />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </motion.div>
             )}
 

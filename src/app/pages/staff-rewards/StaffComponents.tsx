@@ -51,26 +51,32 @@ export function FloatingField({
   right,
   error = false,
   success = false,
+  onFocus,
+  onBlur,
+  disabled = false,
 }: {
-  label: string;
+  label: ReactNode;
   value: string;
   onChange: (v: string) => void;
   type?: string;
-  inputMode?: "text" | "numeric" | "tel";
+  inputMode?: "text" | "numeric" | "tel" | "email";
   maxLength?: number;
   hint?: ReactNode;
   right?: ReactNode;
   error?: boolean;
   success?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  disabled?: boolean;
 }) {
   const border = error
     ? "border-[#dc2626] focus:border-[#dc2626]"
     : success
       ? "border-[#16a34a] focus:border-[#16a34a]"
-      : "border-[#E2E8F0] focus:border-[#003883]";
+      : disabled
+        ? "border-[#E2E8F0]"
+        : "border-[#E2E8F0] focus:border-[#003883]";
   const filled = value !== "";
-  // Native date inputs always render their own dd/mm/yyyy placeholder segments — hide that
-  // text until focused or filled, so it doesn't collide with the floating label at rest.
   const textColor = type === "date" && !filled ? "text-transparent focus:text-[#1E293B]" : "text-[#1E293B]";
   return (
     <div>
@@ -81,7 +87,10 @@ export function FloatingField({
           maxLength={maxLength}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`peer w-full bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] font-['Effra',sans-serif] text-[14px] ${textColor} outline-none focus:border-2 transition-colors ${right ? "pr-[48px]" : ""} ${border}`}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          disabled={disabled}
+          className={`peer w-full bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] font-['Effra',sans-serif] text-[14px] ${textColor} outline-none transition-colors ${right ? "pr-[48px]" : ""} ${border} ${disabled ? "bg-[#f5f6f7] text-[#9ca3af] cursor-not-allowed" : "focus:border-2"}`}
         />
         <label
           className={`absolute left-[16px] font-['Effra',sans-serif] text-[14px] text-[#64748B] pointer-events-none peer-focus:top-[10px] peer-focus:text-[10px] transition-all ${filled ? "top-[10px] text-[10px]" : "top-1/2 -translate-y-1/2"}`}

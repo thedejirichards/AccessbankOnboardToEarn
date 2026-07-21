@@ -1,12 +1,15 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
+import { MOBILE_FRAME_ID } from "./MobileLayout";
 
 interface BottomSheetSelectorProps {
-  label: string;
+  label: ReactNode;
   value: string;
   onChange: (v: string) => void;
   options: string[];
   disabled?: boolean;
+  disabledOptions?: string[];
   hint?: string;
   sheetTitle?: string;
   searchPlaceholder?: string;
@@ -18,6 +21,7 @@ export default function BottomSheetSelector({
   onChange,
   options,
   disabled = false,
+  disabledOptions,
   hint,
   sheetTitle,
   searchPlaceholder,
@@ -28,6 +32,8 @@ export default function BottomSheetSelector({
   const listRef = useRef<HTMLDivElement>(null);
 
   const filled = value !== "";
+
+  const disabledSet = useMemo(() => new Set(disabledOptions ?? []), [disabledOptions]);
 
   const filtered = useMemo(() => {
     if (!query.trim()) return options;
@@ -82,109 +88,116 @@ export default function BottomSheetSelector({
       </button>
       {hint && <div className="mt-1.5 font-['Effra',sans-serif] text-xs text-[#94A3B8]">{hint}</div>}
 
-      {/* Bottom sheet */}
-      <AnimatePresence>
-        {open && (
-          <div className="fixed inset-0 z-50 flex items-end justify-center">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 bg-black/40"
-              onClick={() => setOpen(false)}
-            />
+      {/* Bottom sheet – portaled into the mobile frame root */}
+      {createPortal(
+        <AnimatePresence>
+          {open && (
+            <div className="absolute inset-0 z-50 flex items-end justify-center pointer-events-auto">
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0 bg-black/40"
+                onClick={() => setOpen(false)}
+              />
 
-            {/* Sheet */}
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="relative w-full max-w-[480px] bg-white rounded-t-[20px] flex flex-col max-h-[75vh]"
-            >
-              {/* Handle */}
-              <div className="flex justify-center pt-[10px] pb-[4px]">
-                <div className="w-[36px] h-[4px] rounded-full bg-[#e2e5ea]" />
-              </div>
-
-              {/* Header */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-[#f0f0f0]">
-                <h3 className="font-['Effra',sans-serif] font-bold text-lg text-[#383838]">
-                  {sheetTitle || label}
-                </h3>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-full hover:bg-[#f4f6f8] flex items-center justify-center transition-colors"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18M6 6l12 12" stroke="#383838" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Search */}
-              {showSearch && (
-                <div className="px-5 pt-3 pb-2">
-                  <div className="relative">
-                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <circle cx="11" cy="11" r="7" stroke="#94A3B8" strokeWidth="2" />
-                      <path d="M20 20l-3.5-3.5" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                    <input
-                      ref={inputRef}
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
-                      placeholder={searchPlaceholder || `Search ${label.toLowerCase()}…`}
-                      className="w-full bg-[#f4f6f8] rounded-xl pl-9 pr-3.5 py-2.5 font-['Effra',sans-serif] text-sm text-[#1E293B] outline-none placeholder:text-[#94A3B8] focus:ring-2 focus:ring-[#003883]/20 transition-shadow"
-                    />
-                    {query && (
-                      <button onClick={() => setQuery("")} className="absolute right-2.5 top-1/2 -translate-y-1/2">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <circle cx="12" cy="12" r="10" fill="#d1d5db" />
-                          <path d="M15 9l-6 6M9 9l6 6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-                        </svg>
-                      </button>
-                    )}
-                  </div>
+              {/* Sheet */}
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 28, stiffness: 300 }}
+                className="relative w-full max-w-[480px] bg-white rounded-t-[20px] flex flex-col max-h-[75vh]"
+              >
+                {/* Handle */}
+                <div className="flex justify-center pt-[10px] pb-[4px]">
+                  <div className="w-[36px] h-[4px] rounded-full bg-[#e2e5ea]" />
                 </div>
-              )}
 
-              {/* Options list */}
-              <div ref={listRef} className="flex-1 overflow-y-auto px-3 py-1 overscroll-contain">
-                {filtered.length === 0 ? (
-                  <div className="py-8 text-center">
-                    <p className="font-['Effra',sans-serif] text-sm text-[#94A3B8]">No results found</p>
+                {/* Header */}
+                <div className="flex items-center justify-between px-5 py-3 border-b border-[#f0f0f0]">
+                  <h3 className="font-['Effra',sans-serif] font-bold text-lg text-[#383838]">
+                    {sheetTitle || label}
+                  </h3>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="w-8 h-8 rounded-full hover:bg-[#f4f6f8] flex items-center justify-center transition-colors"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M18 6L6 18M6 6l12 12" stroke="#383838" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Search */}
+                {showSearch && (
+                  <div className="px-5 pt-3 pb-2">
+                    <div className="relative">
+                      <svg className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="7" stroke="#94A3B8" strokeWidth="2" />
+                        <path d="M20 20l-3.5-3.5" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                      <input
+                        ref={inputRef}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder={searchPlaceholder || `Search…`}
+                        className="w-full bg-[#f4f6f8] rounded-xl pl-9 pr-3.5 py-2.5 font-['Effra',sans-serif] text-sm text-[#1E293B] outline-none placeholder:text-[#94A3B8] focus:ring-2 focus:ring-[#003883]/20 transition-shadow"
+                      />
+                      {query && (
+                        <button onClick={() => setQuery("")} className="absolute right-2.5 top-1/2 -translate-y-1/2">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10" fill="#d1d5db" />
+                            <path d="M15 9l-6 6M9 9l6 6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  filtered.map((opt) => {
-                    const selected = opt === value;
-                    return (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => select(opt)}
-                        className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${selected ? "bg-[#ebf3ff]" : "hover:bg-[#f4f6f8] active:bg-[#eef1f5]"}`}
-                      >
-                        <span className={`font-['Effra',sans-serif] text-sm ${selected ? "font-bold text-[#003883]" : "text-[#26282b]"}`}>
-                          {opt}
-                        </span>
-                        {selected && (
-                          <motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 12, stiffness: 260 }} width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <circle cx="12" cy="12" r="10" fill="#003883" />
-                            <path d="M8 12.5l2.5 2.5L16 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </motion.svg>
-                        )}
-                      </button>
-                    );
-                  })
                 )}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+
+                {/* Options list */}
+                <div ref={listRef} className="flex-1 overflow-y-auto px-3 py-1 overscroll-contain">
+                  {filtered.length === 0 ? (
+                    <div className="py-8 text-center">
+                      <p className="font-['Effra',sans-serif] text-sm text-[#94A3B8]">No results found</p>
+                    </div>
+                  ) : (
+                    filtered.map((opt) => {
+                      const selected = opt === value;
+                      const isDisabled = disabledSet.has(opt);
+                      return (
+                        <button
+                          key={opt}
+                          type="button"
+                          disabled={isDisabled}
+                          onClick={() => !isDisabled && select(opt)}
+                          className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl transition-colors ${isDisabled ? "opacity-50 cursor-not-allowed" : selected ? "bg-[#ebf3ff]" : "hover:bg-[#f4f6f8] active:bg-[#eef1f5]"}`}
+                        >
+                          <span className={`font-['Effra',sans-serif] text-sm ${selected ? "font-bold text-[#003883]" : "text-[#26282b]"}`}>
+                            {opt}
+                          </span>
+                          {isDisabled ? (
+                            <span className="font-['Effra',sans-serif] font-bold text-[9px] text-[#9ca3af] bg-[#eceef1] px-2 py-0.5 rounded-full">COMING SOON</span>
+                          ) : selected && (
+                            <motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 12, stiffness: 260 }} width="20" height="20" viewBox="0 0 24 24" fill="none">
+                              <circle cx="12" cy="12" r="10" fill="#003883" />
+                              <path d="M8 12.5l2.5 2.5L16 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </motion.svg>
+                          )}
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.getElementById(MOBILE_FRAME_ID) ?? document.body
+      )}
     </>
   );
 }

@@ -4,22 +4,40 @@ import { currentStaff, avatarGradient, heroGrad } from "./StaffComponents";
 
 const items = [
   {
-    id: "profile",
-    label: "Staff Profile",
-    route: "/staff-rewards/profile",
-    d: "M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c0-2.7 5.3-4 8-4s8 1.3 8 4",
+    id: "home",
+    label: "Home",
+    route: "/home",
+    d: "M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5zM9 21V12h6v9",
   },
   {
-    id: "customers",
-    label: "Customers",
-    route: "/staff-rewards/customers",
-    d: "M16 21v-2a4 4 0 00-3-3.87M8.5 21v-2a4 4 0 013-3.87M12.5 7a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0zM20 21v-2a4 4 0 00-2.5-3.7M16.5 3.7a3.5 3.5 0 010 6.6",
+    id: "loans",
+    label: "My Loans",
+    route: "/loans",
+    d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM12 6v6l4 2",
   },
   {
-    id: "leaderboard",
-    label: "Leaderboard",
-    route: "/rewards",
-    d: "M6 9V4h12v5a6 6 0 01-12 0zM9 20h6M12 15v5",
+    id: "device",
+    label: "Device Finance",
+    route: "/device-finance",
+    d: "M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zM8 2v4M16 2v4M8 13h8M8 17h4",
+  },
+  {
+    id: "vehicle",
+    label: "Vehicle Finance",
+    route: "/vehicle-finance",
+    d: "M3 13h18M5 9l2-4h10l2 4M5 9v6a2 2 0 002 2h1a1 1 0 001-1v-1M19 9v6a2 2 0 01-2 2h-1a1 1 0 01-1-1v-1M8 13h8",
+  },
+  {
+    id: "quickbox",
+    label: "Pay with Quickbox",
+    route: "/pay-with-quickbox",
+    d: "M20 12H4M12 4v16M4 8a4 4 0 014-4h8a4 4 0 014 4v8a4 4 0 01-4 4H8a4 4 0 01-4-4V8z",
+  },
+  {
+    id: "support",
+    label: "Support",
+    route: "/support",
+    d: "M21 12a9 9 0 11-18 0 9 9 0 0118 0zM12 16v.01M12 13a2 2 0 00.71-3.87A2 2 0 0010 11",
   },
 ];
 

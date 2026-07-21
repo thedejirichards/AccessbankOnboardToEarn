@@ -7,9 +7,14 @@ import StaffProfilePage from "./pages/staff-rewards/StaffProfilePage";
 import StaffCustomersPage from "./pages/staff-rewards/StaffCustomersPage";
 import StaffAccountConsentPage from "./pages/staff-rewards/StaffAccountConsentPage";
 import StaffTermsIdentityPage from "./pages/staff-rewards/StaffTermsIdentityPage";
-import StaffVerificationPage from "./pages/staff-rewards/StaffVerificationPage";
+
 import StaffCompletePage from "./pages/staff-rewards/StaffCompletePage";
 import RewardsPage from "./pages/staff-rewards/RewardsPage";
+import LoansPage from "./pages/staff-rewards/LoansPage";
+import DeviceFinancePage from "./pages/staff-rewards/DeviceFinancePage";
+import VehicleFinancePage from "./pages/staff-rewards/VehicleFinancePage";
+import PayWithQuickboxPage from "./pages/staff-rewards/PayWithQuickboxPage";
+import SupportPage from "./pages/staff-rewards/SupportPage";
 
 const routes = [
   { path: "/", element: <StartScreen /> },
@@ -21,9 +26,13 @@ const routes = [
   { path: "/staff-rewards/customers", element: <StaffCustomersPage /> },
   { path: "/staff-rewards/account", element: <StaffAccountConsentPage /> },
   { path: "/staff-rewards/terms-identity", element: <StaffTermsIdentityPage /> },
-  { path: "/staff-rewards/verification", element: <StaffVerificationPage /> },
   { path: "/staff-rewards/complete", element: <StaffCompletePage /> },
   { path: "/rewards", element: <RewardsPage /> },
+  { path: "/loans", element: <LoansPage /> },
+  { path: "/device-finance", element: <DeviceFinancePage /> },
+  { path: "/vehicle-finance", element: <VehicleFinancePage /> },
+  { path: "/pay-with-quickbox", element: <PayWithQuickboxPage /> },
+  { path: "/support", element: <SupportPage /> },
   { path: "*", element: <Navigate to="/" replace /> },
 ];
 

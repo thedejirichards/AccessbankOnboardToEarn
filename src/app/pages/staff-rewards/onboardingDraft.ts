@@ -2,9 +2,11 @@ const KEY = "staffOnboard_draft";
 
 export type IdType = "bvn" | "nin";
 export type AccountCategory = "individual" | "sme";
+export type TermsDelivery = "email" | "sms" | "whatsapp";
 
 export interface OnboardingProfile {
   firstName: string;
+  middleName: string;
   lastName: string;
   dob: string;
   gender: string;
@@ -17,9 +19,14 @@ export interface RelationshipOfficer {
 }
 
 export interface OnboardingDraft {
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  preferredName?: string;
   category?: AccountCategory;
   accountType?: string;
   consentAccepted?: boolean;
+  termsDelivery?: TermsDelivery[];
   cryptoAttestation?: boolean;
   politicallyExposed?: boolean;
   resident?: boolean;
@@ -35,7 +42,11 @@ export interface OnboardingDraft {
   profile?: OnboardingProfile;
   state?: string;
   lga?: string;
+  town?: string;
   street?: string;
+  buildingName?: string;
+  apartment?: string;
+  branch?: string;
   accountNumber?: string;
   ro?: RelationshipOfficer;
 }
