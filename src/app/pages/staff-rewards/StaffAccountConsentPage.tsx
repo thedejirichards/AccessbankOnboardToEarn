@@ -287,7 +287,11 @@ export default function StaffAccountConsentPage() {
                 </li>
               </ul>
               <button
-                onClick={() => { setShowInfoModal(false); setInfoModalViewed(true); }}
+                onClick={() => {
+                  setShowInfoModal(false);
+                  setInfoModalViewed(true);
+                  if (!infoModalDismissable) setInfoExplained(true);
+                }}
                 className={`w-full ${ctaCls} ${ctaEnabled}`}
               >
                 Got it
