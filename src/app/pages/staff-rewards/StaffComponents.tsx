@@ -105,6 +105,8 @@ export function FloatingField({
 }
 
 /* ---------- Floating-label select (dropdown variant of FloatingField) ---------- */
+export type FloatingSelectOption = string | { value: string; label: string; disabled?: boolean };
+
 export function FloatingSelect({
   label,
   value,
@@ -116,11 +118,12 @@ export function FloatingSelect({
   label: string;
   value: string;
   onChange: (v: string) => void;
-  options: string[];
+  options: FloatingSelectOption[];
   disabled?: boolean;
   hint?: ReactNode;
 }) {
   const filled = value !== "";
+  const normalized = options.map((o) => (typeof o === "string" ? { value: o, label: o } : o));
   return (
     <div>
       <div className="relative">
@@ -131,9 +134,9 @@ export function FloatingSelect({
           className={`peer w-full bg-white border rounded-[8px] px-[16px] pt-[26px] pb-[10px] pr-[38px] font-['Effra',sans-serif] text-[14px] text-[#1E293B] outline-none focus:border-2 transition-colors appearance-none border-[#E2E8F0] focus:border-[#003883] ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
         >
           <option value="" disabled hidden />
-          {options.map((o) => (
-            <option key={o} value={o}>
-              {o}
+          {normalized.map((o) => (
+            <option key={o.value} value={o.value} disabled={o.disabled}>
+              {o.label}
             </option>
           ))}
         </select>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import MobileLayout from "../../components/MobileLayout";
-import { StaffHeader, StaffProgressTracker, RoleBadge, FloatingField, FloatingSelect, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels, pagePadXBtm, bottomBarCls, bottomBarInner, sectionTitle, sectionDesc } from "./StaffComponents";
+import { StaffHeader, StaffProgressTracker, RoleBadge, FloatingField, FloatingSelect, type FloatingSelectOption, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels, pagePadXBtm, bottomBarCls, bottomBarInner, sectionTitle, sectionDesc } from "./StaffComponents";
 import { clearDraft, patchDraft, type AccountCategory, type TermsDelivery } from "./onboardingDraft";
 
 const termsDeliveryOptions: { value: TermsDelivery; label: string }[] = [
@@ -11,7 +11,11 @@ const termsDeliveryOptions: { value: TermsDelivery; label: string }[] = [
   { value: "whatsapp", label: "WhatsApp" },
 ];
 
-const accountTypeOptions = ["Diamond Xtra"];
+const accountTypeOptions: FloatingSelectOption[] = [
+  { value: "Diamond Xtra", label: "Diamond Xtra" },
+  { value: "SME", label: "SME (Coming soon)", disabled: true },
+  { value: "Current Account", label: "Current Account (Coming soon)", disabled: true },
+];
 
 function ValidationPill({ valid, label }: { valid: boolean; label: string }) {
   return (
@@ -41,10 +45,11 @@ export default function StaffAccountConsentPage() {
   const [preferredName, setPreferredName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [accountType, setAccountType] = useState(accountTypeOptions[0]);
+  const [accountType, setAccountType] = useState("Diamond Xtra");
   const [termsDelivery, setTermsDelivery] = useState<TermsDelivery[]>([]);
   const [consentRead, setConsentRead] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [infoModalDismissable, setInfoModalDismissable] = useState(true);
   const [infoModalViewed, setInfoModalViewed] = useState(false);
   const [infoExplained, setInfoExplained] = useState(false);
 
@@ -170,29 +175,45 @@ export default function StaffAccountConsentPage() {
           <div className="mt-6">
             <button
               type="button"
-              onClick={() => setShowInfoModal(true)}
-              className="font-['Effra',sans-serif] font-semibold text-sm text-[#003883] hover:underline mb-3"
+              onClick={() => { setInfoModalDismissable(true); setShowInfoModal(true); }}
+              className={`flex items-center gap-1.5 font-['Effra',sans-serif] font-semibold text-sm text-[#003883] hover:underline mb-3 ${!infoModalViewed ? "animate-pulse" : ""}`}
             >
+              {!infoModalViewed && (
+                <span className="w-[7px] h-[7px] rounded-full bg-[#FF8200] shrink-0" />
+              )}
               Why we need this information
             </button>
 
-            <button
-              type="button"
-              onClick={() => { if (infoModalViewed) setInfoExplained((prev) => !prev); }}
-              className={`flex items-start gap-[10px] w-full text-left mb-4 ${!infoModalViewed ? "opacity-40 cursor-not-allowed" : ""}`}
-              disabled={!infoModalViewed}
-            >
-              <span className={`w-[20px] h-[20px] rounded-[6px] border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${infoExplained ? "border-[#003883] bg-[#003883]" : "border-[#c9cdd4]"}`}>
-                {infoExplained && (
-                  <motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 12, stiffness: 260 }} width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                  </motion.svg>
-                )}
-              </span>
-              <span className="font-['Effra',sans-serif] text-xs md:text-sm text-[#4b5563] leading-5 md:leading-6">
-                I have explained the purpose of collecting this information to the customer and confirmed that the selected phone number or email address belongs to the customer.
-              </span>
-            </button>
+            <div className="mb-4">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!infoModalViewed) {
+                    setInfoModalDismissable(false);
+                    setShowInfoModal(true);
+                  } else {
+                    setInfoExplained((prev) => !prev);
+                  }
+                }}
+                className="flex items-start gap-[10px] w-full text-left"
+              >
+                <span className={`w-[20px] h-[20px] rounded-[6px] border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${infoExplained ? "border-[#003883] bg-[#003883]" : !infoModalViewed ? "border-[#c9cdd4] bg-[#f5f6f7]" : "border-[#c9cdd4]"}`}>
+                  {infoExplained && (
+                    <motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", damping: 12, stiffness: 260 }} width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                    </motion.svg>
+                  )}
+                </span>
+                <span className={`font-['Effra',sans-serif] text-xs md:text-sm leading-5 md:leading-6 ${!infoModalViewed ? "text-[#9ca3af]" : "text-[#4b5563]"}`}>
+                  I have explained the purpose of collecting this information to the customer and confirmed that the selected phone number or email address belongs to the customer.
+                </span>
+              </button>
+              {!infoModalViewed && (
+                <p className="font-['Effra',sans-serif] text-[11px] text-[#FF8200] mt-1.5 pl-[30px]">
+                  Tap above to view "Why we need this information" first
+                </p>
+              )}
+            </div>
 
             <div className={`${cardCls} p-4 md:p-5 leading-5 md:leading-6`}>
               <p className="font-['Effra',sans-serif] font-extrabold text-sm md:text-base text-[#26282b] mb-1">
@@ -241,7 +262,7 @@ export default function StaffAccountConsentPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-black/40"
-              onClick={() => setShowInfoModal(false)}
+              onClick={() => { if (infoModalDismissable) setShowInfoModal(false); }}
             />
             <motion.div
               initial={{ y: "100%" }}
