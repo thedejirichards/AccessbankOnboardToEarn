@@ -181,7 +181,7 @@ export default function StaffAccountConsentPage() {
               {!infoModalViewed && (
                 <span className="w-[7px] h-[7px] rounded-full bg-[#FF8200] shrink-0" />
               )}
-              Why we need this information
+              Click why we need this information
             </button>
 
             <div className="mb-4">
@@ -210,7 +210,7 @@ export default function StaffAccountConsentPage() {
               </button>
               {!infoModalViewed && (
                 <p className="font-['Effra',sans-serif] text-[11px] text-[#FF8200] mt-1.5 pl-[30px]">
-                  Tap above to view "Why we need this information" first
+                  Tap above to view "Click why we need this information" first
                 </p>
               )}
             </div>
