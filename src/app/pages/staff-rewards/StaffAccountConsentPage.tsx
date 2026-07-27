@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import MobileLayout from "../../components/MobileLayout";
-import { StaffHeader, StaffProgressTracker, RoleBadge, FloatingField, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels, pagePadXBtm, bottomBarCls, bottomBarInner, sectionTitle, sectionDesc } from "./StaffComponents";
+import { StaffHeader, StaffProgressTracker, RoleBadge, FloatingField, FloatingSelect, cardCls, ctaCls, ctaEnabled, ctaDisabled, journeyLabels, pagePadXBtm, bottomBarCls, bottomBarInner, sectionTitle, sectionDesc } from "./StaffComponents";
 import { clearDraft, patchDraft, type AccountCategory, type TermsDelivery } from "./onboardingDraft";
 
 const termsDeliveryOptions: { value: TermsDelivery; label: string }[] = [
@@ -10,6 +10,8 @@ const termsDeliveryOptions: { value: TermsDelivery; label: string }[] = [
   { value: "sms", label: "SMS" },
   { value: "whatsapp", label: "WhatsApp" },
 ];
+
+const accountTypeOptions = ["Diamond Xtra"];
 
 function ValidationPill({ valid, label }: { valid: boolean; label: string }) {
   return (
@@ -39,6 +41,7 @@ export default function StaffAccountConsentPage() {
   const [preferredName, setPreferredName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [accountType, setAccountType] = useState(accountTypeOptions[0]);
   const [termsDelivery, setTermsDelivery] = useState<TermsDelivery[]>([]);
   const [consentRead, setConsentRead] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -57,7 +60,7 @@ export default function StaffAccountConsentPage() {
       phone: phone.trim(),
       termsDelivery,
       category: "individual" as AccountCategory,
-      accountType: "diamondxtra",
+      accountType: accountType.toLowerCase().replace(/\s+/g, ""),
       consentAccepted: true,
     });
     navigate("/staff-rewards/terms-identity");
@@ -65,6 +68,7 @@ export default function StaffAccountConsentPage() {
 
   const canContinue =
     phone.trim() !== "" &&
+    accountType !== "" &&
     termsDelivery.length > 0 &&
     consentRead &&
     infoExplained;
@@ -97,9 +101,10 @@ export default function StaffAccountConsentPage() {
             <FloatingField
               label={<span>Phone Number <span className="text-[#dc2626]">*</span></span>}
               value={phone}
-              onChange={setPhone}
+              onChange={(v) => setPhone(v.replace(/\D/g, "").slice(0, 11))}
               type="tel"
               inputMode="tel"
+              maxLength={11}
             />
             <div>
               <FloatingField
@@ -148,6 +153,18 @@ export default function StaffAccountConsentPage() {
                 );
               })}
             </div>
+          </div>
+
+          <div className="mt-6">
+            <p className="font-['Effra',sans-serif] font-semibold text-sm text-[#26282b] mb-3">
+              Account type
+            </p>
+            <FloatingSelect
+              label="Account Type"
+              value={accountType}
+              onChange={setAccountType}
+              options={accountTypeOptions}
+            />
           </div>
 
           <div className="mt-6">
